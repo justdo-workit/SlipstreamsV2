@@ -142,6 +142,9 @@ export const f1Calendar2026: GrandPrix[] = [
   {
     round: 4,
     country: 'Bahrain',
+    coverImage: ,
+    gpImage: /ik.imagekit.io/u6knbvq74h/formula%201%20relt/Bahrain%20-%20Sakhir.jpg,
+    trackImage:,
     location: 'Sakhir',
     officialName: 'FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2026',
     circuit: 'Bahrain International Circuit',
