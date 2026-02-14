@@ -112,7 +112,7 @@ export function UpcomingRaces({ races }: UpcomingRacesProps) {
                 {/* Races Grid / Carousel */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {visibleRaces.map((race) => (
-                        <div key={race.round} className="min-w-0 animate-fade-in">
+                        <div key={race.round} className="min-w-0">
                             <RaceCard race={race} variant="immersive" />
                         </div>
                     ))}

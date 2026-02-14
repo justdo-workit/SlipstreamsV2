@@ -18,7 +18,7 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
             <div className="container-custom">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">
+                    <h2 className="text-4xl md:text-5xl font-black uppercase tracking-wider">
                         Schedule
                     </h2>
                     <div className="w-24 h-1 bg-[hsl(var(--brand-red))] mx-auto mt-4" />

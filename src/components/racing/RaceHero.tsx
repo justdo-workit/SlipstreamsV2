@@ -101,25 +101,23 @@ export function RaceHero({ race }: RaceHeroProps) {
         <section className="relative min-h-[85vh] flex items-center justify-center pb-20 overflow-hidden">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0">
-                {race.trackImageUrl ? (
-                    <Image
-                        src={race.trackImageUrl}
-                        alt={race.circuit}
-                        fill
-                        className="object-cover"
-                        priority
-                    />
-                ) : (
-                    <div className="w-full h-full bg-[hsl(var(--background-elevated))]" />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,black_100%)] opacity-80" />
+                <Image
+                    src={race.coverImage || '/images/hero-bg.jpg'}
+                    alt={`${race.country} Grand Prix Background`}
+                    fill
+                    className="object-cover object-bottom"
+                    priority
+                />
+
+                {/* Dark Overlay Gradients matching FeatureRace design */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
             </div>
 
             {/* Content */}
             <div className="container-custom relative z-10 pt-28 text-center w-full">
                 {/* Round Info Badge */}
-                <div className="inline-flex items-center gap-2 mb-8 animate-fade-in">
+                <div className="inline-flex items-center gap-2 mb-8">
                     <span className="bg-[hsl(var(--brand-red))] text-white font-bold px-3 py-1 rounded text-sm uppercase tracking-wider">
                         Round {race.round}
                     </span>
@@ -129,8 +127,8 @@ export function RaceHero({ race }: RaceHeroProps) {
                 </div>
 
                 {/* Main Title */}
-                <h1 className="text-6xl md:text-8xl lg:text-8xl font-black uppercase tracking-tighter mb-4 text-shadow-strong animate-slide-in-right">
-                    <span className="block text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50">
+                <h1 className="text-4xl md:text-7xl lg:text-7xl font-black uppercase tracking-wide mb-4 text-shadow-strong">
+                    <span className="block ">
                         {race.country}
                     </span>
                     <span className="block text-[hsl(var(--brand-red))]">
@@ -139,7 +137,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                 </h1>
 
                 {/* Location */}
-                <div className="flex items-center justify-center gap-2 text-[hsl(var(--brand-red))] font-bold uppercase tracking-widest text-sm md:text-base mb-16 animate-fade-in delay-100">
+                <div className="flex items-center justify-center gap-2 text-[hsl(var(--brand-red))] font-bold uppercase tracking-widest text-sm md:text-base mb-16">
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
@@ -147,7 +145,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                 </div>
 
                 {/* Countdown Timer */}
-                <div className="mb-12 animate-scale-in delay-200">
+                <div className="mb-12">
                     <p className="text-foreground-muted uppercase tracking-[0.2em] text-xs font-semibold mb-6">Light Out In</p>
                     {countdown && (
                         <div className="grid grid-cols-4 gap-4 md:gap-8 max-w-3xl mx-auto">

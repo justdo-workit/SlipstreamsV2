@@ -21,7 +21,7 @@ export function RaceFacts({ race }: RaceFactsProps) {
             <div className="container-custom">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">
+                    <h2 className="text-4xl md:text-5xl font-black uppercase tracking-wider">
                         Race Facts
                     </h2>
                     <div className="w-24 h-1 bg-[hsl(var(--brand-red))] mx-auto mt-4" />
@@ -33,15 +33,23 @@ export function RaceFacts({ race }: RaceFactsProps) {
                         {/* Grid Background */}
                         <div className="absolute inset-0 grid-background opacity-20" />
 
-                        {/* Decorative Circle */}
-                        <div className="absolute w-[80%] h-[80%] rounded-full border border-[hsl(var(--brand-red))]/20 animate-pulse" />
+                
 
-                        {/* Placeholder for Track Map if no image */}
-                        <div className="relative z-10 w-full h-full flex items-center justify-center">
-                            {/* If we had a track map SVG/Image it would go here. For now using a placeholder text or the generic image if mapped */}
-                            <span className="text-foreground-subtle uppercase tracking-widest font-bold text-xl">
-                                {race.circuit} Layout
-                            </span>
+                        {/* Track Map Content */}
+                        <div className="relative z-10 w-full h-full flex items-center justify-center p-4">
+                            {race.trackImage ? (
+                                <Image
+                                    src={race.trackImage}
+                                    alt={`${race.circuit} Layout`}
+                                    fill
+                                    className="object-contain"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                />
+                            ) : (
+                                <span className="text-foreground-subtle uppercase tracking-widest font-bold text-xl">
+                                    {race.circuit} Layout
+                                </span>
+                            )}
                         </div>
                     </div>
 

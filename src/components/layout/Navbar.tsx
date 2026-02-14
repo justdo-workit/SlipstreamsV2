@@ -43,7 +43,7 @@ export function Navbar() {
                                 <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="white" stroke="none" />
                             </svg>
                         </div>
-                        <span className="text-xl md:text-2xl font-bold tracking-tight uppercase">
+                        <span className="text-xl md:text-2xl font-bold tracking-wide uppercase">
                             Slip<span className="text-[hsl(var(--brand-red))]">Streams</span>
                         </span>
                     </Link>

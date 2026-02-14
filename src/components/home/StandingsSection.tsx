@@ -12,7 +12,7 @@ export function StandingsSection({ drivers, teams }: StandingsSectionProps) {
         <section className="py-20 bg-[hsl(var(--background-subtle))]">
             <div className="container-custom">
                 <div className="mb-12">
-                    <h2 className="text-4xl font-bold uppercase tracking-tight">2026 Season Standings</h2>
+                    <h2 className="text-4xl font-bold uppercase tracking-wide">2026 Season Standings</h2>
                     <p className="text-foreground-muted mt-2">Track the battle for the championship</p>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

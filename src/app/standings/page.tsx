@@ -43,7 +43,7 @@ export default function StandingsPage() {
                                 2026 Season
                             </span>
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black mb-4 italic tracking-tight">
+                        <h1 className="text-5xl md:text-7xl font-black mb-4 italic tracking-wide">
                             WORLD CONSTRUCTORS'<br />
                             <span className="text-gradient-red">CHAMPIONSHIP</span>
                         </h1>

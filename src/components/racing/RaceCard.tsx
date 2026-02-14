@@ -81,7 +81,7 @@ export function RaceCard({ race, variant = 'upcoming', className = '' }: RaceCar
 
                 {/* Content Overlay (Bottom) */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
-                    <h3 className="text-3xl font-black text-white uppercase mb-1 leading-none tracking-tight group-hover:underline decoration-2 underline-offset-4">
+                    <h3 className="text-3xl font-black text-white uppercase mb-1 leading-none tracking-wide group-hover:underline decoration-2 underline-offset-4">
                         {race.country} GP
                     </h3>
                     <div className="flex flex-col text-sm text-gray-300 font-medium tracking-wide gap-0.5">
