@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Hls from 'hls.js';
 
 interface HLSPlayerProps {
-    src: string; // .m3u8 URL
+    src: string; // .m3u8, .mp4, or embed URL
     poster?: string;
     autoplay?: boolean;
     muted?: boolean;
@@ -30,9 +30,25 @@ export function HLSPlayer({
     const [error, setError] = useState<string | null>(null);
     const [currentSrc, setCurrentSrc] = useState<string>('');
 
+    // Determine if source is likely an embed (iframe) rather than direct video
+    // If it doesn't match known video extensions and isn't HLS mime type, treat as embed
+    const isEmbed = !/\.(m3u8|mp4|webm|ogg|mov)$/i.test(src) && !src.includes('application/vnd.apple.mpegurl');
+
     useEffect(() => {
+        // If it's an embed, we don't need HLS/Video logic
+        if (isEmbed) {
+            setIsLoading(false);
+            onReady?.();
+            return;
+        }
+
         const video = videoRef.current;
         if (!video) return;
+
+        // Reset state on source change
+        setIsLoading(true);
+        setError(null);
+        setCurrentSrc('');
 
         // Cleanup function
         const cleanup = () => {
@@ -45,107 +61,118 @@ export function HLSPlayer({
             if (currentSrc && currentSrc.startsWith('blob:')) {
                 URL.revokeObjectURL(currentSrc);
             }
+
+            // Remove event listeners
+            video.removeAttribute('src');
+            video.load();
         };
 
-        // Check if browser natively supports HLS (Safari/iOS)
-        const canPlayHLS = video.canPlayType('application/vnd.apple.mpegurl');
+        // Determine if source is HLS
+        const isHLS = src.includes('.m3u8') || src.includes('application/vnd.apple.mpegurl');
 
-        if (canPlayHLS) {
-            // Native HLS support (Safari/iOS)
+        if (isHLS) {
+            // Check if browser natively supports HLS (Safari/iOS)
+            const canPlayNativeHLS = video.canPlayType('application/vnd.apple.mpegurl');
+
+            if (canPlayNativeHLS) {
+                // Native HLS support
+                video.src = src;
+                setCurrentSrc(src);
+                setIsLoading(false);
+
+                const onLoadedMetadata = () => onReady?.();
+                const onError = (e: Event) => {
+                    setError('Video playback error');
+                    if (onError) onError(e);
+                };
+
+                video.addEventListener('loadedmetadata', onLoadedMetadata);
+                video.addEventListener('error', onError);
+            } else if (Hls.isSupported()) {
+                // HLS.js support
+                const hls = new Hls({
+                    enableWorker: true,
+                    lowLatencyMode: true,
+                    backBufferLength: 90,
+                });
+
+                hlsRef.current = hls;
+                hls.attachMedia(video);
+
+                hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+                    hls.loadSource(src);
+                });
+
+                hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                    setIsLoading(false);
+                    onReady?.();
+                    if (autoplay) video.play().catch(console.warn);
+                });
+
+                hls.on(Hls.Events.ERROR, (event, data) => {
+                    console.error('HLS Error:', data);
+                    if (data.fatal) {
+                        switch (data.type) {
+                            case Hls.ErrorTypes.NETWORK_ERROR:
+                                hls.startLoad();
+                                break;
+                            case Hls.ErrorTypes.MEDIA_ERROR:
+                                hls.recoverMediaError();
+                                break;
+                            default:
+                                setError('Fatal error, cannot recover stream');
+                                if (onError) onError(data);
+                                hls.destroy();
+                                break;
+                        }
+                    }
+                });
+            } else {
+                const msg = 'HLS is not supported in this browser';
+                setError(msg);
+                if (onError) onError(new Error(msg));
+            }
+        } else {
+            // Direct Video File (MP4, WebM, etc.)
             video.src = src;
             setCurrentSrc(src);
-            setIsLoading(false);
 
-            video.addEventListener('loadedmetadata', () => {
-                onReady?.();
-            });
-
-            video.addEventListener('error', (e) => {
-                const errorMessage = 'Video playback error';
-                setError(errorMessage);
-                onError?.(e);
-            });
-        } else if (Hls.isSupported()) {
-            // Use hls.js for browsers that don't support HLS natively
-            const hls = new Hls({
-                enableWorker: true,
-                lowLatencyMode: true,
-                backBufferLength: 90,
-                maxBufferLength: 30,
-                maxMaxBufferLength: 60,
-                // Progressive download
-                progressive: true,
-            });
-
-            hlsRef.current = hls;
-
-            // Attach HLS to video element
-            hls.attachMedia(video);
-
-            hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-                console.log('HLS: Media attached');
-                hls.loadSource(src);
-            });
-
-            hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-                console.log('HLS: Manifest parsed', data);
+            const onCanPlay = () => {
                 setIsLoading(false);
                 onReady?.();
+            };
 
-                // Autoplay if enabled
-                if (autoplay) {
-                    video.play().catch((e) => {
-                        console.warn('Autoplay failed:', e);
-                        // Autoplay was prevented, likely due to browser policy
-                    });
-                }
-            });
+            const onError = (e: Event) => {
+                setError('Error loading video file');
+                if (onError) onError(e);
+            };
 
-            hls.on(Hls.Events.FRAG_LOADED, (event, data) => {
-                // Fragment loaded successfully
-                // The video element will have a blob: URL as its src from MediaSource
-                if (video.src && video.src.startsWith('blob:')) {
-                    setCurrentSrc(video.src);
-                }
-            });
+            video.addEventListener('canplay', onCanPlay);
+            video.addEventListener('error', onError);
+            video.load();
 
-            hls.on(Hls.Events.ERROR, (event, data) => {
-                console.error('HLS Error:', data);
-
-                if (data.fatal) {
-                    switch (data.type) {
-                        case Hls.ErrorTypes.NETWORK_ERROR:
-                            console.error('Fatal network error, trying to recover');
-                            hls.startLoad();
-                            break;
-                        case Hls.ErrorTypes.MEDIA_ERROR:
-                            console.error('Fatal media error, trying to recover');
-                            hls.recoverMediaError();
-                            break;
-                        default:
-                            const errorMessage = 'Fatal error, cannot recover stream';
-                            setError(errorMessage);
-                            onError?.(data);
-                            hls.destroy();
-                            break;
-                    }
-                }
-            });
-
-            hls.on(Hls.Events.BUFFER_APPENDING, () => {
-                // Segments are being appended to MediaSource buffer
-                // At this point, video.src will be a blob: URL
-            });
-        } else {
-            const errorMessage = 'HLS is not supported in this browser';
-            setError(errorMessage);
-            onError?.(new Error(errorMessage));
+            if (autoplay) video.play().catch(console.warn);
         }
 
-        // Cleanup on unmount
         return cleanup;
-    }, [src, autoplay, onReady, onError]);
+    }, [src, autoplay, onReady, onError, isEmbed]);
 
+    // Render Iframe for embeds
+    if (isEmbed) {
+        return (
+            <div className={`relative ${className} w-full h-full bg-black`}>
+                <iframe
+                    src={src}
+                    className="w-full h-full border-0"
+                    allowFullScreen
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    style={{ border: 'none' }}
+                />
+            </div>
+        );
+    }
+
+    // Render Video Player for HLS/Direct files
     return (
         <div className={`relative ${className}`}>
             {isLoading && (
