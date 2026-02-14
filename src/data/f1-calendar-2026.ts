@@ -54,7 +54,7 @@ export const f1Calendar2026: GrandPrix[] = [
     gpImage: 'https://i.pinimg.com/736x/83/b5/c2/83b5c21518d163f4b0af55da208a07e9.jpg',
     trackImage: 'https://media.formula1.com/image/upload/c_fit,h_704/q_auto/v1740000000/common/f1/2026/track/2026trackmelbournedetailed.webp',
 
-    country: 'Australian',
+    country: 'Australia',
     location: 'Melbourne',
     officialName: 'FORMULA 1 QATAR AIRWAYS AUSTRALIAN GRAND PRIX 2026',
     circuit: 'Albert Park Circuit',
@@ -142,9 +142,6 @@ export const f1Calendar2026: GrandPrix[] = [
   {
     round: 4,
     country: 'Bahrain',
-    coverImage: ,
-    gpImage: /ik.imagekit.io/u6knbvq74h/formula%201%20relt/Bahrain%20-%20Sakhir.jpg,
-    trackImage:,
     location: 'Sakhir',
     officialName: 'FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2026',
     circuit: 'Bahrain International Circuit',
