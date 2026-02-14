@@ -1,0 +1,42 @@
+
+> slipstreams0@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.3s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/53) ...
+  Generating static pages using 11 workers (13/53) 
+  Generating static pages using 11 workers (26/53) 
+  Generating static pages using 11 workers (39/53) 
+✓ Generating static pages using 11 workers (53/53) in 943.5ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /contact
+├ ○ /disclaimer
+├ ○ /privacy
+├ ● /race/[slug]
+│ ├ /race/australia
+│ ├ /race/china
+│ ├ /race/japan
+│ └ [+18 more paths]
+├ ○ /schedule
+├ ○ /standings
+├ ○ /terms
+└ ● /watch/[slug]
+  ├ /watch/australia
+  ├ /watch/china
+  ├ /watch/japan
+  └ [+18 more paths]
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
