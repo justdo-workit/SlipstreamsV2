@@ -2,6 +2,8 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { FeatureRace } from '@/components/home/FeatureRace';
 import { UpcomingRaces } from '@/components/home/UpcomingRaces';
+import { HomeBannerAd } from '@/components/ads/HomeBannerAd';
+import { HomeUpcomingBottomAd } from '@/components/ads/HomeUpcomingBottomAd';
 import { StandingsSection } from '@/components/home/StandingsSection';
 import { getUpcomingRaces, f1Calendar2026, getCurrentRaceWeekend, getNextRace } from '@/data/f1-calendar-2026';
 import { driverStandings2026, constructorStandings2026 } from '@/data/standings-2026';
@@ -23,8 +25,14 @@ export default function HomePage() {
         {/* Featured Race Hero (Dynamic) */}
         <FeatureRace race={featureRace} />
 
+        {/* Banner Ad centered above Upcoming Races */}
+        <HomeBannerAd />
+
         {/* Upcoming Races Carousel */}
         <UpcomingRaces races={allRaces} />
+
+        {/* Banner Ad centered below Upcoming Races */}
+        <HomeUpcomingBottomAd />
 
         {/* Standings Section */}
         <StandingsSection

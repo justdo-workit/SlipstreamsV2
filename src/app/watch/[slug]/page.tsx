@@ -3,6 +3,7 @@ import { WatchNavbar } from '@/components/layout/WatchNavbar';
 import { StreamController } from '@/components/video/StreamController';
 import { HighPerformanceAd } from '@/components/ads/HighPerformanceAd';
 import { HighPerformanceBanner } from '@/components/ads/HighPerformanceBanner';
+import { SidebarAd } from '@/components/ads/SidebarAd';
 import { f1Calendar2026 } from '@/data/f1-calendar-2026';
 import Link from 'next/link';
 
@@ -116,6 +117,9 @@ export default async function StreamingPage({ params }: PageProps) {
                                     </Link>
                                 </div>
                             </div>
+
+                            {/* Sidebar Ad */}
+                            <SidebarAd />
                         </div>
 
                         {/* Center Column: Player Area */}
