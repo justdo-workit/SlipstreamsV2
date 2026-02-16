@@ -7,13 +7,14 @@ const STREAMS = {
     DEFAULT: 'https://embedsports.me/fia-f1/sky-sports-f1-sky-f1-stream-1',
     BACKUP_1: 'https://streamcrichd.com/update/skyf1.php',
     BACKUP_2: 'https://dlhd.link/stream/stream-60.php',
+    BACKUP_3: 'https://hakunamatata5.org/sky-main-event/clean.html',
 };
 
 export function StreamController() {
     const [activeStream, setActiveStream] = useState<string>(STREAMS.DEFAULT);
-    const [activeButton, setActiveButton] = useState<'DEFAULT' | 'BACKUP_1' | 'BACKUP_2'>('DEFAULT');
+    const [activeButton, setActiveButton] = useState<'DEFAULT' | 'BACKUP_1' | 'BACKUP_2' | 'BACKUP_3'>('DEFAULT');
 
-    const handleStreamChange = (stream: string, btn: 'DEFAULT' | 'BACKUP_1' | 'BACKUP_2') => {
+    const handleStreamChange = (stream: string, btn: 'DEFAULT' | 'BACKUP_1' | 'BACKUP_2' | 'BACKUP_3') => {
         setActiveStream(stream);
         setActiveButton(btn);
     };
@@ -30,15 +31,26 @@ export function StreamController() {
         <div className="space-y-4">
             {/* Video Player - Full Width, No Ads Touching */}
             <div className="card p-0 overflow-hidden border-[hsl(var(--brand-red))]/30 bg-black">
-                <div className="aspect-video">
-                    <HLSPlayer
-                        key={activeStream} // Force re-mount on stream change to ensure clean state
-                        src={activeStream}
-                        autoplay={false}
-                        muted={false}
-                        controls={true}
-                        className="w-full h-full"
-                    />
+                <div className="aspect-video w-full h-full relative">
+                    {activeButton === 'BACKUP_3' ? (
+                        <iframe
+                            src={activeStream}
+                            className="w-full h-full border-0 absolute inset-0"
+                            allowFullScreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            scrolling="no"
+                            style={{ overflow: 'hidden' }}
+                        />
+                    ) : (
+                        <HLSPlayer
+                            key={activeStream}
+                            src={activeStream}
+                            autoplay={false}
+                            muted={false}
+                            controls={true}
+                            className="w-full h-full"
+                        />
+                    )}
                 </div>
             </div>
 
@@ -70,6 +82,15 @@ export function StreamController() {
                         }`}
                 >
                     Backup 2
+                </button>
+                <button
+                    onClick={() => handleStreamChange(STREAMS.BACKUP_3, 'BACKUP_3')}
+                    className={`px-4 py-2 cursor-pointer font-semibold rounded text-sm uppercase tracking-wide transition-colors ${activeButton === 'BACKUP_3'
+                        ? 'bg-[hsl(var(--brand-red))] hover:bg-[hsl(var(--brand-red))]/90 text-white'
+                        : 'bg-[hsl(var(--surface-elevated))] hover:bg-[hsl(var(--surface-highlight))] text-foreground border border-white/10'
+                        }`}
+                >
+                    Backup 3
                 </button>
 
                 <div className="ml-auto flex items-center gap-2">

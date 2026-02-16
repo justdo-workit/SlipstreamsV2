@@ -1,6 +1,7 @@
 'use client';
 
 import { GrandPrix } from '@/data/f1-calendar-2026';
+import { SafeAdFrame } from '@/components/ads/SafeAdFrame';
 
 interface RaceScheduleProps {
     race: GrandPrix;
@@ -60,6 +61,18 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
                                     <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--brand-red))]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                                 </div>
                             ))}
+
+                            {/* Sunday Ad */}
+                            {day.name === 'Sunday' && (
+                                <div className="mt-6 flex justify-center">
+                                    <SafeAdFrame
+                                        adKey="3ff3fb1f818fe806eddec9e76ce0c4d6"
+                                        width={468}
+                                        height={60}
+                                        className="bg-[hsl(var(--background-subtle))] rounded-lg overflow-hidden shadow-sm"
+                                    />
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>
