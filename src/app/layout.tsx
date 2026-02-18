@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import localFont from "next/font/local";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -57,7 +58,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${f1Font.variable} antialiased`}
       >
-        <Preloader />
+        <Suspense fallback={null}>
+          <Preloader />
+        </Suspense>
         {children}
       </body>
     </html>

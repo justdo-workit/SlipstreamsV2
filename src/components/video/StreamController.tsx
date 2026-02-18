@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { HLSPlayer } from '@/components/video/HLSPlayer';
 
 const STREAMS = {
-    DEFAULT: 'https://embedsports.me/fia-f1/sky-sports-f1-sky-f1-stream-1',
+    DEFAULT: 'https://baki.wearehere.site/logo.m3u8',
     BACKUP_1: 'https://streamcrichd.com/update/skyf1.php',
     BACKUP_2: 'https://dlhd.link/stream/stream-60.php',
     BACKUP_3: 'https://hakunamatata5.org/sky-main-event/clean.html',

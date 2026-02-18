@@ -89,7 +89,7 @@ export default async function StreamingPage({ params }: PageProps) {
                                 <h3 className="font-bold mb-3 uppercase tracking-wide text-xs text-foreground-muted">Quick Links</h3>
                                 <div className="space-y-2">
                                     <Link
-                                        href={`/race/${params.slug}`}
+                                        href={`/race/${slug}`}
                                         className="flex items-center gap-2 text-sm text-foreground-muted hover:text-[hsl(var(--brand-red))] transition-colors"
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,7 +98,7 @@ export default async function StreamingPage({ params }: PageProps) {
                                         Race Schedule
                                     </Link>
                                     <Link
-                                        href={`/race/${params.slug}`}
+                                        href={`/race/${slug}`}
                                         className="flex items-center gap-2 text-sm text-foreground-muted hover:text-[hsl(var(--brand-red))] transition-colors"
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
