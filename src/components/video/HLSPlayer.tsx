@@ -71,24 +71,8 @@ export function HLSPlayer({
         const isHLS = src.includes('.m3u8') || src.includes('application/vnd.apple.mpegurl');
 
         if (isHLS) {
-            // Check if browser natively supports HLS (Safari/iOS)
-            const canPlayNativeHLS = video.canPlayType('application/vnd.apple.mpegurl');
-
-            if (canPlayNativeHLS) {
-                // Native HLS support
-                video.src = src;
-                setCurrentSrc(src);
-                setIsLoading(false);
-
-                const onLoadedMetadata = () => onReady?.();
-                const onError = (e: Event) => {
-                    setError('Video playback error');
-                    if (onError) onError(e);
-                };
-
-                video.addEventListener('loadedmetadata', onLoadedMetadata);
-                video.addEventListener('error', onError);
-            } else if (Hls.isSupported()) {
+            // Priority: Check HLS.js support FIRST for better error handling & headers support
+            if (Hls.isSupported()) {
                 // HLS.js support
                 const hls = new Hls({
                     enableWorker: true,
@@ -114,19 +98,37 @@ export function HLSPlayer({
                     if (data.fatal) {
                         switch (data.type) {
                             case Hls.ErrorTypes.NETWORK_ERROR:
+                                setError(`Network Error: ${data.details}`);
                                 hls.startLoad();
                                 break;
                             case Hls.ErrorTypes.MEDIA_ERROR:
+                                setError(`Media Error: ${data.details}`);
                                 hls.recoverMediaError();
                                 break;
                             default:
-                                setError('Fatal error, cannot recover stream');
+                                setError(`Fatal: ${data.details}`);
                                 if (onError) onError(data);
                                 hls.destroy();
                                 break;
                         }
                     }
                 });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                // Fallback to Native HLS (mainly for iOS Safari)
+                video.src = src;
+                setCurrentSrc(src);
+                setIsLoading(false);
+
+                const onLoadedMetadata = () => onReady?.();
+                const onError = (e: Event) => {
+                    // Try to get more specific error info if possible, though native video error is limited
+                    const err = (e.target as HTMLVideoElement).error;
+                    setError(`Native Playback Error: ${err?.message || err?.code || 'Unknown'}`);
+                    if (onError) onError(e);
+                };
+
+                video.addEventListener('loadedmetadata', onLoadedMetadata);
+                video.addEventListener('error', onError);
             } else {
                 const msg = 'HLS is not supported in this browser';
                 setError(msg);
@@ -201,6 +203,9 @@ export function HLSPlayer({
                 muted={muted}
                 playsInline
                 preload="metadata"
+                // @ts-expect-error - referrerPolicy is valid HTML but missing from React types
+                referrerPolicy="no-referrer"
+                crossOrigin="anonymous"
             />
         </div>
     );
