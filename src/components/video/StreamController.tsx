@@ -17,6 +17,7 @@ export function StreamController() {
     const [activeButton, setActiveButton] = useState<'DEFAULT' | 'BACKUP_1' | 'BACKUP_2' | 'BACKUP_3'>('DEFAULT');
     const [isTVMode, setIsTVMode] = useState(false);
     const [isHDLocked, setIsHDLocked] = useState(true);
+    const [showMobilePopup, setShowMobilePopup] = useState(false);
 
     useEffect(() => {
         const handleFullscreenChange = () => {
@@ -30,7 +31,25 @@ export function StreamController() {
         }
 
         document.addEventListener('fullscreenchange', handleFullscreenChange);
-        return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+
+        // Mobile Popup Logic - Show once after 5 seconds
+        const checkMobileAndSchedulePopup = () => {
+            if (window.innerWidth < 768) {
+                const timer = setTimeout(() => {
+                    if (!document.fullscreenElement) {
+                        setShowMobilePopup(true);
+                    }
+                }, 5000); // 5 seconds
+                return () => clearTimeout(timer);
+            }
+        };
+
+        const cleanupPopup = checkMobileAndSchedulePopup();
+
+        return () => {
+            document.removeEventListener('fullscreenchange', handleFullscreenChange);
+            if (cleanupPopup) cleanupPopup();
+        };
     }, []);
 
     const toggleTVMode = async () => {
@@ -62,7 +81,29 @@ export function StreamController() {
     };
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 relative">
+            {/* Mobile TV Mode Popup */}
+            {showMobilePopup && !isTVMode && (
+                <div className="fixed bg-black rounded-md bottom-20 left-4 right-4 z-50 md:hidden animate-in slide-in-from-bottom-5 fade-in duration-300">
+                    <div className="bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--brand-red))] p-4 rounded-lg shadow-lg flex items-center justify-between gap-4">
+                        <p className="text-white text-sm font-medium">
+                            Switch to <span className="text-[hsl(var(--brand-red))] font-bold">TV MODE</span> to get rid of ads while streaming
+                        </p>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => setShowMobilePopup(false)}
+                                className="text-white/60 hover:text-white p-2"
+                                aria-label="Close popup"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Video Player - Full Width, No Ads Touching */}
             <div
                 ref={containerRef}
@@ -161,12 +202,12 @@ export function StreamController() {
                 <div className="ml-auto flex items-center gap-2">
                     <button
                         onClick={toggleTVMode}
-                        className={`cursor-pointer flex items-center gap-2 px-3 py-2 transition-colors text-sm font-medium ${isTVMode ? 'text-[hsl(var(--brand-red))]' : 'text-foreground-muted hover:text-white'}`}
+                        className={`cursor-pointer flex items-center gap-2 px-3 py-2 transition-colors text-sm font-medium border border-[hsl(var(--brand-red))] rounded ${isTVMode ? 'text-[hsl(var(--brand-red))]' : 'text-foreground-muted hover:text-white'}`}
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
-                        <span className="hidden sm:inline">{isTVMode ? 'Exit TV Mode' : 'TV Mode'}</span>
+                        <span className="inline uppercase font-bold text-xs sm:text-sm">{isTVMode ? 'Exit TV Mode' : 'TV MODE'}</span>
                     </button>
                     {!isTVMode && isHDLocked && (
                         <button

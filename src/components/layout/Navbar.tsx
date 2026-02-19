@@ -108,7 +108,7 @@ export function Navbar() {
 
                 {/* Mobile Menu */}
                 {isMobileMenuOpen && (
-                    <div className="md:hidden py-6 border-t border-[hsl(var(--border-subtle))] animate-fade-in">
+                    <div className="md:hidden bg-black rounded-md px-2 py-6 border-t border-[hsl(var(--border-subtle))] animate-fade-in">
                         <div className="flex flex-col gap-4">
                             <Link
                                 href="/"

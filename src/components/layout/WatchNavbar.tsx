@@ -37,7 +37,7 @@ export function WatchNavbar({ title, backUrl = '/' }: WatchNavbarProps) {
 
                 {/* Center: GP Title */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <h1 className="text-lg md:text-xl font-bold text-white uppercase tracking-wider text-center px-4">
+                    <h1 className="text-sm md:text-xl font-bold text-white uppercase tracking-wider text-center px-4">
                         {title}
                     </h1>
                 </div>
