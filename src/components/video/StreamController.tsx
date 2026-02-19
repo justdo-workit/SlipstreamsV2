@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import { HLSPlayer } from '@/components/video/HLSPlayer';
 
 const STREAMS = {
-    DEFAULT: 'https://corsproxy.io/?' + encodeURIComponent('https://baki.wearehere.site/logo.m3u8'),
+    // DEFAULT: `https://slipstreams.just-do-work-it.workers.dev/?url=${encodeURIComponent('https://baki.wearehere.site/logo.m3u8')}`, // Preserved for future use
+    DEFAULT: 'https://westreamf1.com/westreamf1.php',
     BACKUP_1: 'https://hakunamatata5.org/sky-main-event/clean.html',
     BACKUP_2: 'https://streamcrichd.com/update/skyf1.php',
     BACKUP_3: 'https://dlhd.link/stream/stream-60.php',
@@ -80,13 +81,21 @@ export function StreamController() {
                     </button>
                 )}
 
-                <div className={`${isTVMode ? 'w-full h-full' : 'aspect-video w-full h-full'} relative`}>
+                <div className={`${isTVMode ? 'w-full h-full' : (activeButton === 'BACKUP_1' ? 'w-full h-[600px] md:h-auto md:aspect-video' : 'aspect-video w-full h-full')} relative`}>
                     {/* HD Lock Shade Overlay - Inside relative video container */}
                     {isHDLocked && (
                         <div className="absolute inset-0 z-30 bg-black/60 pointer-events-none transition-opacity duration-500" />
                     )}
 
-                    {activeButton === 'BACKUP_3' ? (
+                    {activeButton === 'BACKUP_1' ? (
+                        <iframe
+                            title="Live"
+                            src={activeStream}
+                            className=" w-[100%] h-[100%] md:w-[100%] md:h-[100%]"
+                            allowFullScreen
+                            sandbox="allow-same-origin allow-scripts allow-popups"
+                        />
+                    ) : activeButton === 'BACKUP_3' ? (
                         <iframe
                             src={activeStream}
                             className="w-full h-full border-0 absolute inset-0"
@@ -147,6 +156,7 @@ export function StreamController() {
                 >
                     Backup 3
                 </button>
+
 
                 <div className="ml-auto flex items-center gap-2">
                     <button

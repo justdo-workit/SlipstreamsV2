@@ -34,6 +34,15 @@ export function HLSPlayer({
     const [isPlaying, setIsPlaying] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
+    // Safety check for src
+    if (!src) {
+        return (
+            <div className={`relative ${className} w-full h-full bg-black flex items-center justify-center`}>
+                <p className="text-white/50">No stream source available</p>
+            </div>
+        );
+    }
+
     // Determine if source is likely an embed (iframe) rather than direct video
     // If it doesn't match known video extensions and isn't HLS mime type, treat as embed
     const isEmbed = !/\.(m3u8|mp4|webm|ogg|mov)$/i.test(src) && !src.includes('application/vnd.apple.mpegurl');
@@ -79,12 +88,9 @@ export function HLSPlayer({
             // Priority: Check HLS.js support FIRST for better error handling & headers support
             if (Hls.isSupported()) {
                 const hls = new Hls({
-                    enableWorker: false,
+                    enableWorker: true, // Enable worker as per working example
                     lowLatencyMode: false,
                     backBufferLength: 90,
-                    xhrSetup: function (xhr, url) {
-                        xhr.withCredentials = false;
-                    },
                 });
 
                 hlsRef.current = hls;
@@ -262,8 +268,7 @@ export function HLSPlayer({
                 onPause={handlePlayPause}
                 onEnded={() => setIsPlaying(false)}
                 onClick={togglePlay} // Also toggle on video click
-                // @ts-expect-error - referrerPolicy is valid HTML but missing from React types
-                referrerPolicy="no-referrer"
+                crossOrigin="anonymous"
             />
         </div>
     );
