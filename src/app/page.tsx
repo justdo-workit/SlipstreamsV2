@@ -6,9 +6,9 @@ import { HomeBannerAd } from '@/components/ads/HomeBannerAd';
 import { HomeUpcomingBottomAd } from '@/components/ads/HomeUpcomingBottomAd';
 import { StandingsSection } from '@/components/home/StandingsSection';
 import { getUpcomingRaces, f1Calendar2026, getCurrentRaceWeekend, getNextRace } from '@/data/f1-calendar-2026';
-import { driverStandings2026, constructorStandings2026 } from '@/data/standings-2026';
+import { getDriverStandings, getConstructorStandings } from '@/lib/openf1';
 
-export default function HomePage() {
+export default async function HomePage() {
   // Determine the feature race: Current live weekend OR the next upcoming race
   const currentRace = getCurrentRaceWeekend();
   const nextRace = getNextRace();
@@ -16,6 +16,10 @@ export default function HomePage() {
 
   // Get all races for the carousel (it will handle fast-forwarding to current)
   const allRaces = f1Calendar2026;
+
+  // Fetch dynamic standings (OpenF1 or Fallback)
+  const driverStandings = await getDriverStandings();
+  const constructorStandings = await getConstructorStandings();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -36,8 +40,8 @@ export default function HomePage() {
 
         {/* Standings Section */}
         <StandingsSection
-          drivers={driverStandings2026}
-          teams={constructorStandings2026}
+          drivers={driverStandings}
+          teams={constructorStandings}
         />
       </main>
 
