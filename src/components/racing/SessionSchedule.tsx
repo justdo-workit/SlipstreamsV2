@@ -21,6 +21,7 @@ export function SessionSchedule({ race }: SessionScheduleProps) {
                 race.sessions.fp1,
                 race.sessions.fp2,
                 race.sessions.fp3,
+                race.sessions.sprintQualifying,
                 race.sessions.sprint,
                 race.sessions.qualifying,
                 race.sessions.race,
@@ -72,7 +73,8 @@ export function SessionSchedule({ race }: SessionScheduleProps) {
         { key: 'fp1', session: race.sessions.fp1, label: 'Practice 1' },
         { key: 'fp2', session: race.sessions.fp2, label: 'Practice 2' },
         { key: 'fp3', session: race.sessions.fp3, label: 'Practice 3' },
-        { key: 'sprint', session: race.sessions.sprint, label: 'Sprint' },
+        { key: 'sprintQualifying', session: race.sessions.sprintQualifying, label: 'Sprint Qualifying' },
+        { key: 'sprint', session: race.sessions.sprint, label: 'Sprint Race' },
         { key: 'qualifying', session: race.sessions.qualifying, label: 'Qualifying' },
         { key: 'race', session: race.sessions.race, label: 'Race' },
     ];
@@ -106,8 +108,8 @@ export function SessionSchedule({ race }: SessionScheduleProps) {
                         <div
                             key={key}
                             className={`card p-6 transition-all ${isNextSession
-                                    ? 'border-[hsl(var(--brand-red))] bg-[hsl(var(--brand-red))]/5'
-                                    : ''
+                                ? 'border-[hsl(var(--brand-red))] bg-[hsl(var(--brand-red))]/5'
+                                : ''
                                 }`}
                         >
                             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

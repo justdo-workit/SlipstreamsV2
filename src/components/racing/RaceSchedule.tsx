@@ -64,11 +64,19 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
         }
     };
 
-    const sessions = [
-        { name: 'Friday', items: [race.sessions.fp1, race.sessions.fp2].filter(Boolean) },
-        { name: 'Saturday', items: [race.sessions.fp3, race.sessions.sprint, race.sessions.qualifying].filter(Boolean) },
-        { name: 'Sunday', items: [race.sessions.race].filter(Boolean) },
-    ];
+    const isSprint = !!race.sessions.sprintQualifying;
+
+    const sessions = isSprint
+        ? [
+            { name: 'Friday', items: [race.sessions.fp1, race.sessions.sprintQualifying].filter(Boolean) },
+            { name: 'Saturday', items: [race.sessions.sprint, race.sessions.qualifying].filter(Boolean) },
+            { name: 'Sunday', items: [race.sessions.race].filter(Boolean) },
+        ]
+        : [
+            { name: 'Friday', items: [race.sessions.fp1, race.sessions.fp2].filter(Boolean) },
+            { name: 'Saturday', items: [race.sessions.fp3, race.sessions.qualifying].filter(Boolean) },
+            { name: 'Sunday', items: [race.sessions.race].filter(Boolean) },
+        ];
 
     const slug = race.country.toLowerCase().replace(/\s+/g, '-');
 

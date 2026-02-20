@@ -26,6 +26,7 @@ export interface GrandPrix {
     fp1?: RaceSession;
     fp2?: RaceSession;
     fp3?: RaceSession;
+    sprintQualifying?: RaceSession;
     sprint?: RaceSession;
     qualifying: RaceSession;
     race: RaceSession;
@@ -93,8 +94,8 @@ export const f1Calendar2026: GrandPrix[] = [
     weekendEnd: '2026-03-15T23:59:59+08:00',
     sessions: {
       fp1: { name: 'Practice 1', date: '2026-03-13', time: '11:30' },
-      fp2: { name: 'Practice 2', date: '2026-03-13', time: '15:00' },
-      fp3: { name: 'Practice 3', date: '2026-03-14', time: '11:30' },
+      sprintQualifying: { name: 'Sprint Qualifying', date: '2026-03-13', time: '15:30' },
+      sprint: { name: 'Sprint Race', date: '2026-03-14', time: '11:00' },
       qualifying: { name: 'Qualifying', date: '2026-03-14', time: '15:00' },
       race: { name: 'Race', date: '2026-03-15', time: '15:00' },
     },
@@ -203,11 +204,11 @@ export const f1Calendar2026: GrandPrix[] = [
     weekendStart: '2026-05-01T00:00:00-04:00',
     weekendEnd: '2026-05-03T23:59:59-04:00',
     sessions: {
-      fp1: { name: 'Practice 1', date: '2026-05-01', time: '13:30' },
-      fp2: { name: 'Practice 2', date: '2026-05-01', time: '17:00' },
-      fp3: { name: 'Practice 3', date: '2026-05-02', time: '12:30' },
+      fp1: { name: 'Practice 1', date: '2026-05-01', time: '12:30' },
+      sprintQualifying: { name: 'Sprint Qualifying', date: '2026-05-01', time: '16:30' },
+      sprint: { name: 'Sprint Race', date: '2026-05-02', time: '12:00' },
       qualifying: { name: 'Qualifying', date: '2026-05-02', time: '16:00' },
-      race: { name: 'Race', date: '2026-05-03', time: '15:30' },
+      race: { name: 'Race', date: '2026-05-03', time: '16:00' },
     },
     facts: {
       circuitLength: '5.412',
@@ -229,11 +230,11 @@ export const f1Calendar2026: GrandPrix[] = [
     weekendStart: '2026-05-22T00:00:00-04:00',
     weekendEnd: '2026-05-24T23:59:59-04:00',
     sessions: {
-      fp1: { name: 'Practice 1', date: '2026-05-22', time: '13:30' },
-      fp2: { name: 'Practice 2', date: '2026-05-22', time: '17:00' },
-      fp3: { name: 'Practice 3', date: '2026-05-23', time: '12:30' },
+      fp1: { name: 'Practice 1', date: '2026-05-22', time: '12:30' },
+      sprintQualifying: { name: 'Sprint Qualifying', date: '2026-05-22', time: '16:30' },
+      sprint: { name: 'Sprint Race', date: '2026-05-23', time: '12:00' },
       qualifying: { name: 'Qualifying', date: '2026-05-23', time: '16:00' },
-      race: { name: 'Race', date: '2026-05-24', time: '14:00' },
+      race: { name: 'Race', date: '2026-05-24', time: '16:00' },
     },
     facts: {
       circuitLength: '4.361',
@@ -337,9 +338,9 @@ export const f1Calendar2026: GrandPrix[] = [
     weekendStart: '2026-07-03T00:00:00+01:00',
     weekendEnd: '2026-07-05T23:59:59+01:00',
     sessions: {
-      fp1: { name: 'Practice 1', date: '2026-07-03', time: '13:30' },
-      fp2: { name: 'Practice 2', date: '2026-07-03', time: '17:00' },
-      fp3: { name: 'Practice 3', date: '2026-07-04', time: '12:30' },
+      fp1: { name: 'Practice 1', date: '2026-07-03', time: '12:30' },
+      sprintQualifying: { name: 'Sprint Qualifying', date: '2026-07-03', time: '16:30' },
+      sprint: { name: 'Sprint Race', date: '2026-07-04', time: '12:00' },
       qualifying: { name: 'Qualifying', date: '2026-07-04', time: '16:00' },
       race: { name: 'Race', date: '2026-07-05', time: '15:00' },
     },
@@ -419,9 +420,9 @@ export const f1Calendar2026: GrandPrix[] = [
     weekendEnd: '2026-08-23T23:59:59+02:00',
     sessions: {
       fp1: { name: 'Practice 1', date: '2026-08-21', time: '12:30' },
-      fp2: { name: 'Practice 2', date: '2026-08-21', time: '16:00' },
-      fp3: { name: 'Practice 3', date: '2026-08-22', time: '11:30' },
-      qualifying: { name: 'Qualifying', date: '2026-08-22', time: '15:00' },
+      sprintQualifying: { name: 'Sprint Qualifying', date: '2026-08-21', time: '16:30' },
+      sprint: { name: 'Sprint Race', date: '2026-08-22', time: '12:00' },
+      qualifying: { name: 'Qualifying', date: '2026-08-22', time: '16:00' },
       race: { name: 'Race', date: '2026-08-23', time: '15:00' },
     },
     facts: {
@@ -525,9 +526,9 @@ export const f1Calendar2026: GrandPrix[] = [
     weekendStart: '2026-10-09T00:00:00+08:00',
     weekendEnd: '2026-10-11T23:59:59+08:00',
     sessions: {
-      fp1: { name: 'Practice 1', date: '2026-10-09', time: '17:30' },
-      fp2: { name: 'Practice 2', date: '2026-10-09', time: '21:00' },
-      fp3: { name: 'Practice 3', date: '2026-10-10', time: '17:30' },
+      fp1: { name: 'Practice 1', date: '2026-10-09', time: '16:30' },
+      sprintQualifying: { name: 'Sprint Qualifying', date: '2026-10-09', time: '20:30' },
+      sprint: { name: 'Sprint Race', date: '2026-10-10', time: '17:00' },
       qualifying: { name: 'Qualifying', date: '2026-10-10', time: '21:00' },
       race: { name: 'Race', date: '2026-10-11', time: '20:00' },
     },
@@ -628,16 +629,16 @@ export const f1Calendar2026: GrandPrix[] = [
     country: 'United States',
     location: 'Las Vegas',
     officialName: 'FORMULA 1 HEINEKEN LAS VEGAS GRAND PRIX 2026',
-    circuit: 'Las Vegas Street Circuit',
-    dateRange: '19 - 21 NOV',
-    weekendStart: '2026-11-19T00:00:00-08:00',
-    weekendEnd: '2026-11-21T23:59:59-08:00',
+    circuit: 'Las Vegas Strip Street Circuit',
+    dateRange: '20 - 22 NOV',
+    weekendStart: '2026-11-20T00:00:00-08:00',
+    weekendEnd: '2026-11-22T23:59:59-08:00',
     sessions: {
-      fp1: { name: 'Practice 1', date: '2026-11-19', time: '20:30' },
-      fp2: { name: 'Practice 2', date: '2026-11-20', time: '00:00' },
-      fp3: { name: 'Practice 3', date: '2026-11-20', time: '20:30' },
-      qualifying: { name: 'Qualifying', date: '2026-11-21', time: '00:00' },
-      race: { name: 'Race', date: '2026-11-21', time: '22:00' },
+      fp1: { name: 'Practice 1', date: '2026-11-19', time: '16:30' },
+      fp2: { name: 'Practice 2', date: '2026-11-19', time: '20:00' },
+      fp3: { name: 'Practice 3', date: '2026-11-20', time: '16:30' },
+      qualifying: { name: 'Qualifying', date: '2026-11-20', time: '20:00' },
+      race: { name: 'Race', date: '2026-11-21', time: '20:00' },
     },
     facts: {
       circuitLength: '6.120',
@@ -660,11 +661,11 @@ export const f1Calendar2026: GrandPrix[] = [
     weekendStart: '2026-11-27T00:00:00+03:00',
     weekendEnd: '2026-11-29T23:59:59+03:00',
     sessions: {
-      fp1: { name: 'Practice 1', date: '2026-11-27', time: '14:30' },
-      sprint: { name: 'Sprint', date: '2026-11-27', time: '19:30' },
-      fp2: { name: 'Practice 2', date: '2026-11-28', time: '14:30' },
-      qualifying: { name: 'Qualifying', date: '2026-11-28', time: '18:00' },
-      race: { name: 'Race', date: '2026-11-29', time: '17:00' },
+      fp1: { name: 'Practice 1', date: '2026-11-27', time: '16:30' },
+      fp2: { name: 'Practice 2', date: '2026-11-27', time: '20:00' },
+      fp3: { name: 'Practice 3', date: '2026-11-28', time: '17:30' },
+      qualifying: { name: 'Qualifying', date: '2026-11-28', time: '21:00' },
+      race: { name: 'Race', date: '2026-11-29', time: '19:00' },
     },
     facts: {
       circuitLength: '5.419',

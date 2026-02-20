@@ -15,7 +15,7 @@ export function FeatureRace({ race }: FeatureRaceProps) {
             <div className="absolute inset-0 z-0">
                 {/* Use a high quality car image or track image if available. For now using placeholder or race track image */}
                 <Image
-                    src={race.coverImage || '/images/hero-bg.jpg'}
+                    src={race.coverImage || 'https://i.pinimg.com/1200x/ec/c2/f5/ecc2f523c4bde102f8048939e0bb7813.jpg'}
                     alt="F1 Hero Background"
                     fill
                     className="object-cover object-bottom "
