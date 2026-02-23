@@ -44,8 +44,12 @@ const f1Font = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Slipstreams — Free F1 Streams",
-  description: "Watch Formula 1 races live and free on Slipstreams.",
+  title: "Slipstreams — F1 Shedules and standings",
+  description: "Watch Formula 1 races schedules and standings on Slipstreams.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

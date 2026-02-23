@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
 
 export function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -32,16 +33,13 @@ export function Navbar() {
                 <div className="flex items-center justify-between h-16 md:h-20">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 group">
-                        <div className="w-8 h-8 bg-[hsl(var(--brand-red))] rounded flex items-center justify-center transition-transform group-hover:scale-110">
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                className="w-5 h-5"
-                                stroke="currentColor"
-                                strokeWidth="2.5"
-                            >
-                                <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="white" stroke="none" />
-                            </svg>
+                        <div className="relative w-12 h-12 transition-transform group-hover:scale-110">
+                            <Image
+                                src="/logo.png"
+                                alt="Slipstreams Logo"
+                                fill
+                                className="object-contain rounded-full"
+                            />
                         </div>
                         <span className="text-xl md:text-2xl font-bold tracking-wide uppercase">
                             Slip<span className="text-[hsl(var(--brand-red))]">Streams</span>
