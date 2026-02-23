@@ -4,7 +4,9 @@ import localFont from "next/font/local";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Preloader } from "@/components/ui/Preloader";
-import Analytics from "@/components/Analytics";
+import GoogleAnalytics from "@/components/Analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,7 +66,8 @@ export default function RootLayout({
       >
         {/* Analytics — tracks page views across all routes */}
         <Suspense fallback={null}>
-          <Analytics />
+          <GoogleAnalytics />
+          <VercelAnalytics />
         </Suspense>
         <Suspense fallback={null}>
           <Preloader />
