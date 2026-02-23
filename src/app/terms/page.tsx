@@ -1,4 +1,5 @@
 import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
 import Link from 'next/link';
 
 export default function TermsPage() {
@@ -65,8 +66,8 @@ export default function TermsPage() {
                                         <h3 className="text-xl font-bold mb-3">Slipstreams does not host, upload, or store any video content on its own servers.</h3>
                                         <p className="text-foreground-muted mb-4 leading-relaxed">
                                             All video materials, race highlights, and livestream embeds found on the platform are
-                                            provided via third-party services (such as YouTube, Vimeo, or official F1 broadcast
-                                            mirrors). Slipstreams acts solely as an editor: all aggregator. We are not responsible
+                                            provided via third-party services (such as YouTube, Vimeo, or other media broadcast
+                                            mirrors). Slipstreams acts solely as an aggregator. We are not responsible
                                             for the availability, legality, or copyright compliance of content hosted on external domains.
                                         </p>
                                         <div className="p-4 bg-[hsl(var(--background))] rounded-lg border border-[hsl(var(--border-subtle))]">
@@ -112,14 +113,14 @@ export default function TermsPage() {
                                 <p className="text-foreground-muted leading-relaxed mb-4">
                                     The "Slipstreams" name, logo, and all elements are the exclusive property of
                                     Slipstreams Media Group. Formula 1®, Grand Prix, and related marks are trademarks of
-                                    Formula One Licensing BV. Formula 1 company. This site is unofficial and is not associated
+                                    their respective owners. This site is unofficial and is not associated
                                     in any way with the Formula 1 companies.
                                 </p>
                                 <div className="space-y-2">
                                     <div className="flex items-start gap-3">
                                         <span className="w-1.5 h-1.5 bg-[hsl(var(--brand-red))] rounded-full mt-2"></span>
                                         <span className="text-foreground-muted">
-                                            <strong className="text-foreground">F1® is a registered trademark</strong> of Formula One Licensing BV
+                                            <strong className="text-foreground">F1® is a registered trademark</strong> of its respective owners
                                         </span>
                                     </div>
                                     <div className="flex items-start gap-3">
@@ -155,40 +156,7 @@ export default function TermsPage() {
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer className="border-t border-[hsl(var(--border-subtle))] py-12 mt-20">
-                <div className="container-custom">
-                    <div className="grid md:grid-cols-3 gap-8 mb-8">
-                        <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wide mb-4">Platform</h3>
-                            <div className="space-y-2 text-sm text-foreground-muted">
-                                <div><Link href="/" className="hover:text-[hsl(var(--brand-red))] transition-colors">Races</Link></div>
-                                <div><Link href="/schedule" className="hover:text-[hsl(var(--brand-red))] transition-colors">Schedule</Link></div>
-                                <div><Link href="/about" className="hover:text-[hsl(var(--brand-red))] transition-colors">About</Link></div>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wide mb-4">Legal</h3>
-                            <div className="space-y-2 text-sm">
-                                <div><Link href="/terms" className="text-[hsl(var(--brand-red))] font-semibold hover:underline">Terms of Use</Link></div>
-                                <div><Link href="/privacy" className="text-foreground-muted hover:text-[hsl(var(--brand-red))] transition-colors">Privacy Policy</Link></div>
-                                <div><Link href="/disclaimer" className="text-foreground-muted hover:text-[hsl(var(--brand-red))] transition-colors">Disclaimer</Link></div>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wide mb-4">Connect</h3>
-                            <div className="space-y-2 text-sm text-foreground-muted">
-                                <div><Link href="/contact" className="hover:text-[hsl(var(--brand-red))] transition-colors">Sporting Code</Link></div>
-                                <div><Link href="/contact" className="hover:text-[hsl(var(--brand-red))] transition-colors">Terms of Service</Link></div>
-                                <div><Link href="/contact" className="hover:text-[hsl(var(--brand-red))] transition-colors">GDPR Compliance</Link></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="text-center text-foreground-subtle text-sm pt-8 border-t border-[hsl(var(--border-subtle))]">
-                        <p>© 2024 SLIPSTREAMS MEDIA GROUP. ALL RIGHTS RESERVED. NOT AFFILIATED WITH F1® | FORMULA 1 COMPANIES.</p>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 }

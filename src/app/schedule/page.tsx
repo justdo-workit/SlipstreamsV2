@@ -1,4 +1,5 @@
 import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
 import { RaceCard } from '@/components/racing/RaceCard';
 import { f1Calendar2026, getCompletedRaces, getUpcomingRaces, getCurrentRaceWeekend } from '@/data/f1-calendar-2026';
 
@@ -136,13 +137,7 @@ export default function SchedulePage() {
             </section>
 
             {/* Footer */}
-            <footer className="border-t border-[hsl(var(--border-subtle))] py-12 mt-20">
-                <div className="container-custom">
-                    <div className="text-center text-foreground-subtle text-sm">
-                        <p>© 2026 SlipStreams. All rights reserved. Formula 1® is a trademark of Formula One Licensing BV.</p>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 }

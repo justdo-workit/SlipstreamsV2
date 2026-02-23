@@ -1,4 +1,5 @@
 import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
 import Link from 'next/link';
 
 export default function DisclaimerPage() {
@@ -58,7 +59,7 @@ export default function DisclaimerPage() {
                                         <div className="flex items-start gap-3">
                                             <span className="w-2 h-2 bg-[hsl(var(--brand-red))] rounded-full mt-2 flex-shrink-0"></span>
                                             <p className="text-foreground-muted">
-                                                <strong className="text-foreground">Formula 1®, F1®,</strong> Formula One World Championship, and related marks are trademarks of Formula One Licensing BV.
+                                                <strong className="text-foreground">Formula 1®, F1®,</strong> and all related marks are trademarks of their respective owners.
                                             </p>
                                         </div>
                                         <div className="flex items-start gap-3">
@@ -86,7 +87,7 @@ export default function DisclaimerPage() {
                             </h2>
                             <div className="card p-8">
                                 <p className="text-foreground-muted leading-relaxed mb-4">
-                                    Slipstreams contains links to external websites, including official F1 media channels and social
+                                    Slipstreams contains links to external websites, including race media channels and social
                                     networks. We have no control over the nature, content, and availability of those sites. The inclusion
                                     of any links does not necessarily imply a recommendation or endorse the views expressed within them.
                                 </p>
@@ -119,8 +120,8 @@ export default function DisclaimerPage() {
                                             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                                         </svg>
                                         <p className="text-sm text-foreground-muted">
-                                            Race times, session schedules, and driver standings are sourced from official channels but
-                                            may be subject to change. Always verify critical information with official F1 sources.
+                                            Race times, session schedules, and driver standings are sourced from reliable third-party channels but
+                                            may be subject to change. Always verify critical information from reputable sources.
                                         </p>
                                     </div>
                                 </div>
@@ -146,56 +147,7 @@ export default function DisclaimerPage() {
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer className="border-t border-[hsl(var(--border-subtle))] py-12 mt-20">
-                <div className="container-custom">
-                    <div className="grid md:grid-cols-4 gap-8 mb-8">
-                        <div>
-                            <div className="flex items-center gap-2 mb-4">
-                                <div className="w-8 h-8 bg-[hsl(var(--brand-red))] rounded flex items-center justify-center">
-                                    <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="white" strokeWidth="2.5">
-                                        <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="white" stroke="none" />
-                                    </svg>
-                                </div>
-                                <span className="font-bold text-lg">Slipstreams</span>
-                            </div>
-                            <p className="text-sm text-foreground-muted">
-                                Dedicated to Formula 1 enthusiasts, providing race schedules, insights, and community engagement.
-                            </p>
-                        </div>
-
-                        <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wide mb-4">Platform</h3>
-                            <div className="space-y-2 text-sm text-foreground-muted">
-                                <div><Link href="/schedule" className="hover:text-[hsl(var(--brand-red))] transition-colors">Race Schedule</Link></div>
-                                <div><Link href="/about" className="hover:text-[hsl(var(--brand-red))] transition-colors">Live Updates</Link></div>
-                                <div><Link href="/about" className="hover:text-[hsl(var(--brand-red))] transition-colors">Discord Community</Link></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wide mb-4">Rules</h3>
-                            <div className="space-y-2 text-sm text-foreground-muted">
-                                <div><Link href="/contact" className="hover:text-[hsl(var(--brand-red))] transition-colors">Technical Regs</Link></div>
-                                <div><Link href="/contact" className="hover:text-[hsl(var(--brand-red))] transition-colors">Sporting Code</Link></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wide mb-4">Legal</h3>
-                            <div className="space-y-2 text-sm">
-                                <div><Link href="/terms" className="text-foreground-muted hover:text-[hsl(var(--brand-red))] transition-colors">Terms of Service</Link></div>
-                                <div><Link href="/privacy" className="text-foreground-muted hover:text-[hsl(var(--brand-red))] transition-colors">Privacy Policy</Link></div>
-                                <div><Link href="/disclaimer" className="text-[hsl(var(--brand-red))] font-semibold hover:underline">Data Waiver</Link></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="text-center text-foreground-subtle text-xs pt-8 border-t border-[hsl(var(--border-subtle))]">
-                        <p>© 2024 Slipstreams. All rights reserved.</p>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 }

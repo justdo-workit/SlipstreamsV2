@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { WatchNavbar } from '@/components/layout/WatchNavbar';
+import { Footer } from '@/components/layout/Footer';
 import { StreamController } from '@/components/video/StreamController';
 import { HighPerformanceAd } from '@/components/ads/HighPerformanceAd';
 import { HighPerformanceBanner } from '@/components/ads/HighPerformanceBanner';
@@ -111,14 +112,7 @@ export default async function StreamingPage({ params }: PageProps) {
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer className="border-t border-[hsl(var(--border-subtle))] py-8 mt-12 bg-black/50">
-                <div className="container-custom">
-                    <div className="text-center text-foreground-subtle text-xs">
-                        <p>© 2026 SlipStreams. All rights reserved. Formula 1® is a trademark of Formula One Licensing BV.</p>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 }

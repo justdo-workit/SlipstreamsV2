@@ -36,9 +36,8 @@ export function FeatureRace({ race }: FeatureRaceProps) {
                     </div>
 
                     {/* Title */}
-                    <h1 className="text-4xl md:text-7xl font-black mb-6 text-white leading-[0.9] tracking-wide uppercase">
-                        {race.country}  <br />
-                        <span className="text-white"> Grand Prix</span>
+                    <h1 className="text-4xl md:text-7xl font-black mb-6 text-white leading-[0.9] tracking-wide max-w-2xl uppercase">
+                        {race.officialName}
                     </h1>
 
                     {/* Location & Date */}

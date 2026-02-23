@@ -192,7 +192,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                                 Watch Live
                             </button>
                             <span className="text-xs text-red-500 font-medium uppercase tracking-wider animate-pulse">
-                                Opens 30 mins before session
+                                {`Opens 30 mins before all sessions(FP1,FP2,FP3,Quali,Race)`}
                             </span>
                         </div>
                     )}
