@@ -43,11 +43,11 @@ export function RaceHero({ race }: RaceHeroProps) {
                 }
 
                 // Window:
-                // Open: -240 mins before start
-                // Close: +120 mins after end (End = Start + Duration)
-                const openTime = new Date(sessionStart.getTime() - 240 * 60 * 1000);
+                // Open: -30 mins before start
+                // Close: +60 mins after end (End = Start + Duration)
+                const openTime = new Date(sessionStart.getTime() - 30 * 60 * 1000);
                 const endTime = new Date(sessionStart.getTime() + durationMinutes * 60 * 1000);
-                const closeTime = new Date(endTime.getTime() + 120 * 60 * 1000);
+                const closeTime = new Date(endTime.getTime() + 60 * 60 * 1000);
 
                 if (now >= openTime && now <= closeTime) {
                     live = true;
@@ -183,7 +183,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                             </Link>
                             <span className="text-xs font-bold uppercase tracking-widest text-[#FF1E1E] bg-[#FF1E1E]/10 px-3 py-1 rounded-full animate-pulse flex items-center gap-2 border border-[#FF1E1E]/20 mt-2">
                                 <span className="w-2 h-2 rounded-full bg-[#FF1E1E]"></span>
-                                FP1 IS LIVE
+                                FP2 IS LIVE
                             </span>
                         </div>
                     ) : (
@@ -198,7 +198,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                                 Watch Live
                             </button>
                             <span className="text-xs text-red-500 font-medium uppercase tracking-wider animate-pulse">
-                                {`Opens 4 hours before all sessions(FP1,FP2,FP3,Quali,Race)`}
+                                {`Opens 30 minutes before all sessions`}
                             </span>
                         </div>
                     )}

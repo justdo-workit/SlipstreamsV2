@@ -35,7 +35,7 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
             // Total "Live" window = 2 hours duration + 1 hour buffer = 3 hours
             const liveWindowDurationMs = (2 * 60 * 60 * 1000) + (1 * 60 * 60 * 1000);
             const end = new Date(start.getTime() + liveWindowDurationMs);
-            const openTime = new Date(start.getTime() - 240 * 60 * 1000); // 4 hours before
+            const openTime = new Date(start.getTime() - 30 * 60 * 1000); // 30 mins before
 
             if (now < openTime) return 'upcoming';
             if (now >= openTime && now <= end) return 'live';
@@ -96,7 +96,7 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span className="text-sm font-bold uppercase tracking-wider">
-                            Live Streams Open 4 Hours Before Session Start
+                            Live Streams Open 30 Mins Before Session Start
                         </span>
                     </div>
                 </div>
