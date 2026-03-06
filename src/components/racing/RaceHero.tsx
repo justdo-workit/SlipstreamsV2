@@ -43,11 +43,11 @@ export function RaceHero({ race }: RaceHeroProps) {
                 }
 
                 // Window:
-                // Open: -30 mins before start
-                // Close: +60 mins after end (End = Start + Duration)
-                const openTime = new Date(sessionStart.getTime() - 30 * 60 * 1000);
+                // Open: -240 mins before start
+                // Close: +120 mins after end (End = Start + Duration)
+                const openTime = new Date(sessionStart.getTime() - 240 * 60 * 1000);
                 const endTime = new Date(sessionStart.getTime() + durationMinutes * 60 * 1000);
-                const closeTime = new Date(endTime.getTime() + 60 * 60 * 1000);
+                const closeTime = new Date(endTime.getTime() + 120 * 60 * 1000);
 
                 if (now >= openTime && now <= closeTime) {
                     live = true;
@@ -172,7 +172,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                 <div className="animate-fade-in delay-300">
                     {isLive ? (
                         <Link
-                            href={`/watch/${race.country.toLowerCase()}`}
+                            href={`/watch/${race.country.toLowerCase().replace(/\s+/g, '-')}`}
                             className="btn-primary text-lg px-12 py-4 inline-flex items-center gap-3 hover-glow-red hover:scale-105 transition-all text-shadow-medium"
                         >
                             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
@@ -192,7 +192,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                                 Watch Live
                             </button>
                             <span className="text-xs text-red-500 font-medium uppercase tracking-wider animate-pulse">
-                                {`Opens 30 mins before all sessions(FP1,FP2,FP3,Quali,Race)`}
+                                {`Opens 4 hours before all sessions(FP1,FP2,FP3,Quali,Race)`}
                             </span>
                         </div>
                     )}
