@@ -18,6 +18,21 @@ export function StreamController() {
     const [isTVMode, setIsTVMode] = useState(false);
     const [isHDLocked, setIsHDLocked] = useState(true);
     const [showMobilePopup, setShowMobilePopup] = useState(false);
+    const [isWaitingForStream, setIsWaitingForStream] = useState(false);
+
+    useEffect(() => {
+        // Target time: March 6, 2026 at 9:55 AM IST
+        const targetTime = new Date('2026-03-06T09:55:00+05:30');
+
+        const checkWaitTime = () => {
+            setIsWaitingForStream(new Date() < targetTime);
+        };
+
+        checkWaitTime();
+        const waitInterval = setInterval(checkWaitTime, 1000);
+
+        return () => clearInterval(waitInterval);
+    }, []);
 
     useEffect(() => {
         const handleFullscreenChange = () => {
@@ -126,6 +141,28 @@ export function StreamController() {
                     {/* HD Lock Shade Overlay - Inside relative video container */}
                     {isHDLocked && (
                         <div className="absolute inset-0 z-30 bg-black/60 pointer-events-none transition-opacity duration-500" />
+                    )}
+
+                    {/* Stream Starting Soon Overlay */}
+                    {isWaitingForStream && (
+                        <div className="absolute inset-0 z-40 bg-black flex flex-col items-center justify-center p-4">
+                            <div className="text-center animate-pulse">
+                                <svg className="w-16 h-16 text-[hsl(var(--brand-red))] mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-wider mb-2">
+                                    Stream Starting Soon
+                                </h3>
+                                <p className="text-foreground-muted text-sm md:text-base font-medium">
+                                    The live feed will automatically begin at <span className="text-[hsl(var(--brand-red))] font-bold text-lg">9:55 AM IST</span>.
+                                </p>
+                                <div className="mt-8 flex items-center justify-center gap-2">
+                                    <span className="w-2 h-2 rounded-full bg-[hsl(var(--brand-red))]"></span>
+                                    <span className="w-2 h-2 rounded-full bg-[hsl(var(--brand-red))] animation-delay-200"></span>
+                                    <span className="w-2 h-2 rounded-full bg-[hsl(var(--brand-red))] animation-delay-400"></span>
+                                </div>
+                            </div>
+                        </div>
                     )}
 
                     {activeButton === 'BACKUP_1' ? (
