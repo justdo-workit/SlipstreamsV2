@@ -46,6 +46,28 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
         }
     };
 
+    const getRemainingTime = (sessionDate: string, sessionTime: string) => {
+        try {
+            const offsetMatch = race.weekendStart.match(/([+-]\d{2}:\d{2}|Z)$/);
+            const offset = offsetMatch ? offsetMatch[0] : 'Z';
+            const sessionIso = `${sessionDate}T${sessionTime}:00${offset}`;
+            const start = new Date(sessionIso);
+
+            const diffMs = start.getTime() - now.getTime();
+            if (diffMs <= 0) return '';
+
+            const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+
+            if (days > 0) return `IN ${days}D ${hours}H`;
+            if (hours > 0) return `IN ${hours}H ${mins}M`;
+            return `IN ${mins}M`;
+        } catch (e) {
+            return '';
+        }
+    };
+
     const getStatusStyle = (status: SessionStatus) => {
         switch (status) {
             case 'live':
@@ -57,11 +79,13 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
         }
     };
 
-    const getStatusLabel = (status: SessionStatus) => {
+    const getStatusLabel = (status: SessionStatus, sessionDate: string, sessionTime: string) => {
         switch (status) {
             case 'live': return 'WATCH LIVE';
             case 'completed': return 'Completed';
-            default: return 'Upcoming';
+            default:
+                const remaining = getRemainingTime(sessionDate, sessionTime);
+                return remaining ? `UPCOMING (${remaining})` : 'Upcoming';
         }
     };
 
@@ -122,7 +146,7 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
                                                     <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
                                                 </span>
                                             )}
-                                            {getStatusLabel(status)}
+                                            {getStatusLabel(status, session.date, session.time)}
                                         </span>
                                     </div>
                                 );
