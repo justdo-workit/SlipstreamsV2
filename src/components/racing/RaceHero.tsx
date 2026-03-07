@@ -183,7 +183,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                             </Link>
                             <span className="text-xs font-bold uppercase tracking-widest text-[#FF1E1E] bg-[#FF1E1E]/10 px-3 py-1 rounded-full animate-pulse flex items-center gap-2 border border-[#FF1E1E]/20 mt-2">
                                 <span className="w-2 h-2 rounded-full bg-[#FF1E1E]"></span>
-                                FP2 IS LIVE
+                                FP3 IS LIVE
                             </span>
                         </div>
                     ) : (
