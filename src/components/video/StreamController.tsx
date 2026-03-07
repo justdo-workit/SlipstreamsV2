@@ -21,8 +21,8 @@ export function StreamController() {
     const [isWaitingForStream, setIsWaitingForStream] = useState(false);
 
     useEffect(() => {
-        // Target time: March 6, 2026 at 9:55 AM IST
-        const targetTime = new Date('2026-03-06T09:55:00+05:30');
+        // Target time: March 8, 2026 at 9:15 PM IST
+        const targetTime = new Date('2026-03-08T21:15:00+05:30');
 
         const checkWaitTime = () => {
             setIsWaitingForStream(new Date() < targetTime);
@@ -154,7 +154,7 @@ export function StreamController() {
                                     Stream Starting Soon
                                 </h3>
                                 <p className="text-foreground-muted text-sm md:text-base font-medium">
-                                    The live feed will automatically begin at <span className="text-[hsl(var(--brand-red))] font-bold text-lg">9:55 AM IST</span>.
+                                    The live feed will automatically begin at <span className="text-[hsl(var(--brand-red))] font-bold text-lg">9:15 PM IST</span>.
                                 </p>
                                 <div className="mt-8 flex items-center justify-center gap-2">
                                     <span className="w-2 h-2 rounded-full bg-[hsl(var(--brand-red))]"></span>

@@ -67,7 +67,7 @@ export const f1Calendar2026: GrandPrix[] = [
       fp2: { name: 'Practice 2', date: '2026-03-06', time: '15:30' },
       fp3: { name: 'Practice 3', date: '2026-03-07', time: '11:00' },
       qualifying: { name: 'Qualifying', date: '2026-03-07', time: '16:00' },
-      race: { name: 'Race', date: '2026-03-08', time: '15:00' },
+      race: { name: 'Race', date: '2026-03-08', time: '12:00' },
     },
     facts: {
       circuitLength: '5.278',
