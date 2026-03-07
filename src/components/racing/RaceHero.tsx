@@ -45,9 +45,9 @@ export function RaceHero({ race }: RaceHeroProps) {
                 }
 
                 // Window:
-                // Open: -30 mins before start
+                // Open: -60 mins before start
                 // Close: +60 mins after end (End = Start + Duration)
-                const openTime = new Date(sessionStart.getTime() - 30 * 60 * 1000);
+                const openTime = new Date(sessionStart.getTime() - 60 * 60 * 1000);
                 const endTime = new Date(sessionStart.getTime() + durationMinutes * 60 * 1000);
                 const closeTime = new Date(endTime.getTime() + 60 * 60 * 1000);
 
@@ -205,7 +205,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                                 Watch Live
                             </button>
                             <span className="text-xs text-red-500 font-medium uppercase tracking-wider animate-pulse max-w-sm">
-                                {nextSessionLabel ? `Upcoming: ${nextSessionLabel} (Opens 30 mins before)` : `Opens 30 minutes before all sessions`}
+                                {nextSessionLabel ? `Upcoming: ${nextSessionLabel} (Opens 60 mins before)` : `Opens 60 minutes before all sessions`}
                             </span>
                         </div>
                     )}
