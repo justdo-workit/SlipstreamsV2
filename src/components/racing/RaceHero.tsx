@@ -13,6 +13,8 @@ interface RaceHeroProps {
 export function RaceHero({ race }: RaceHeroProps) {
     const [countdown, setCountdown] = useState<ReturnType<typeof getCountdownToSession> | null>(null);
     const [isLive, setIsLive] = useState(false);
+    const [nextSessionLabel, setNextSessionLabel] = useState("");
+    const [activeSession, setActiveSession] = useState("FP1");
 
     useEffect(() => {
         const checkLiveStatus = () => {
@@ -51,13 +53,18 @@ export function RaceHero({ race }: RaceHeroProps) {
 
                 if (now >= openTime && now <= closeTime) {
                     live = true;
+                    setActiveSession(session.name);
                     break;
+                } else if (now < openTime && nextSessionLabel === "") {
+                    // Try to catch the first upcoming session
+                    setNextSessionLabel(`${session.name} starts at ${session.time} Local`);
                 }
             }
 
             // In development, always enable (bypass time restriction) for testing purposes
             if (process.env.NODE_ENV === 'development') {
                 live = true;
+                setActiveSession('FP3');
             }
 
             setIsLive(live);
@@ -183,7 +190,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                             </Link>
                             <span className="text-xs font-bold uppercase tracking-widest text-[#FF1E1E] bg-[#FF1E1E]/10 px-3 py-1 rounded-full animate-pulse flex items-center gap-2 border border-[#FF1E1E]/20 mt-2">
                                 <span className="w-2 h-2 rounded-full bg-[#FF1E1E]"></span>
-                                FP3 IS LIVE
+                                {activeSession} IS LIVE
                             </span>
                         </div>
                     ) : (
@@ -197,8 +204,8 @@ export function RaceHero({ race }: RaceHeroProps) {
                                 </svg>
                                 Watch Live
                             </button>
-                            <span className="text-xs text-red-500 font-medium uppercase tracking-wider animate-pulse">
-                                {`Opens 30 minutes before all sessions`}
+                            <span className="text-xs text-red-500 font-medium uppercase tracking-wider animate-pulse max-w-sm">
+                                {nextSessionLabel ? `Upcoming: ${nextSessionLabel} (Opens 30 mins before)` : `Opens 30 minutes before all sessions`}
                             </span>
                         </div>
                     )}
