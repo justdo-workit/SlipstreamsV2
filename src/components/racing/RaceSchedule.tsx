@@ -15,7 +15,7 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
     const [now, setNow] = useState(new Date());
 
     useEffect(() => {
-        const timer = setInterval(() => setNow(new Date()), 60000); // Update every minute
+        const timer = setInterval(() => setNow(new Date()), 1000); // Update every second
         return () => clearInterval(timer);
     }, []);
 
