@@ -157,12 +157,6 @@ export function StreamController() {
                             isTVMode={isTVMode}
                         />
                     )}
-
-                    {/* Hide Embedded Button / Ads (Top Right) - Ensures it sits on top of all streams */}
-                    <div
-                        className="absolute top-0 right-0 w-[160px] h-[60px] bg-black pointer-events-auto z-[9999]"
-                        aria-hidden="true"
-                    />
                 </div>
             </div>
 
