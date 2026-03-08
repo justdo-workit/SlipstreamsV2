@@ -112,7 +112,7 @@ export function StreamController() {
                 {isTVMode && (
                     <button
                         onClick={toggleTVMode}
-                        className="absolute top-4 right-4 z-50 bg-black/50 hover:bg-[hsl(var(--brand-red))] text-white p-2 rounded-full transition-colors backdrop-blur-sm"
+                        className="absolute top-4 left-4 z-[99999] bg-black/50 hover:bg-[hsl(var(--brand-red))] text-white p-2 rounded-full transition-colors backdrop-blur-sm"
                         title="Exit TV Mode (Esc)"
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,8 +127,7 @@ export function StreamController() {
                         <div className="absolute inset-0 z-30 bg-black/60 pointer-events-none transition-opacity duration-500" />
                     )}
 
-                    {/* Hide Embedded Button / Ads (Top Right) */}
-                    <div className="absolute top-2 right-2 w-[130px] h-[45px] bg-black pointer-events-auto rounded-md z-40 blur-sm opacity-80"></div>
+
 
                     {activeButton === 'BACKUP_1' ? (
                         <iframe
@@ -158,6 +157,12 @@ export function StreamController() {
                             isTVMode={isTVMode}
                         />
                     )}
+
+                    {/* Hide Embedded Button / Ads (Top Right) - Ensures it sits on top of all streams */}
+                    <div
+                        className="absolute top-0 right-0 w-[160px] h-[60px] bg-black pointer-events-auto z-[9999]"
+                        aria-hidden="true"
+                    />
                 </div>
             </div>
 
