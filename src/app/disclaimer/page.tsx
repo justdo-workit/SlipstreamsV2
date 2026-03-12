@@ -1,6 +1,12 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Disclaimer',
+    description: 'Disclaimer and legal notice for Slipstreams.',
+};
 
 export default function DisclaimerPage() {
     return (

@@ -7,8 +7,26 @@ import { RaceFacts } from '@/components/racing/RaceFacts';
 import { f1Calendar2026 } from '@/data/f1-calendar-2026';
 
 interface PageProps {
-    params: {
+    params: Promise<{
         slug: string;
+    }>;
+}
+
+export async function generateMetadata({ params }: PageProps) {
+    const { slug } = await params;
+    const race = f1Calendar2026.find(
+        (r) => r.country.toLowerCase().replace(/\s+/g, '-') === slug
+    );
+
+    if (!race) {
+        return {
+            title: 'Race Not Found',
+        };
+    }
+
+    return {
+        title: `${race.officialName} (${race.dateRange})`,
+        description: `Everything you need to know about the ${race.officialName}. Schedule, circuit info, and facts.`,
     };
 }
 

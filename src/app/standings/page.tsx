@@ -2,6 +2,12 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { StandingsTabs } from '@/components/standings/StandingsTabs';
 import { getDriverStandings, getConstructorStandings } from '@/lib/openf1';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Standings',
+    description: 'Track the battle for the championship with 2026 Season Standings.',
+};
 
 export default async function StandingsPage() {
     // Fetch dynamic standings

@@ -1,6 +1,12 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Contact',
+    description: 'Get in touch with the Slipstreams community.',
+};
 
 export default function ContactPage() {
     const DISCORD_LINK = "https://discord.gg/BwwumjNQT9";

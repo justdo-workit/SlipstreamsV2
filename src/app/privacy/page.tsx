@@ -1,6 +1,12 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Privacy Policy',
+    description: 'Privacy Policy for Slipstreams.',
+};
 
 export default function PrivacyPolicyPage() {
     return (

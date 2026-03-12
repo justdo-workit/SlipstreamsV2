@@ -46,8 +46,11 @@ const f1Font = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Slipstreams — F1 Shedules and standings",
-  description: "Watch Formula 1 races schedules and standings on Slipstreams.",
+  title: {
+    template: "%s | Slipstreams",
+    default: "Slipstreams — F1 Schedules and Standings",
+  },
+  description: "Watch Formula 1 race schedules and standings on Slipstreams.",
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",

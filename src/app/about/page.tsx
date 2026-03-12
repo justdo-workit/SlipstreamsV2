@@ -1,5 +1,11 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'About',
+    description: 'Learn more about Slipstreams and our mission.',
+};
 
 export default function AboutPage() {
     return (

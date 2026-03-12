@@ -1,6 +1,12 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Terms & Conditions',
+    description: 'Terms and Conditions for using Slipstreams.',
+};
 
 export default function TermsPage() {
     return (

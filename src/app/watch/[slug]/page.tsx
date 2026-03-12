@@ -10,8 +10,26 @@ import { f1Calendar2026 } from '@/data/f1-calendar-2026';
 import Link from 'next/link';
 
 interface PageProps {
-    params: {
+    params: Promise<{
         slug: string;
+    }>;
+}
+
+export async function generateMetadata({ params }: PageProps) {
+    const { slug } = await params;
+    const race = f1Calendar2026.find(
+        (r) => r.country.toLowerCase().replace(/\s+/g, '-') === slug
+    );
+
+    if (!race) {
+        return {
+            title: 'Stream Not Found',
+        };
+    }
+
+    return {
+        title: `Watch ${race.country} Grand Prix Live`,
+        description: `Watch the ${race.officialName} live stream, view polls, and get real-time updates.`,
     };
 }
 

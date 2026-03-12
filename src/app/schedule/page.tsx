@@ -2,6 +2,12 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { RaceCard } from '@/components/racing/RaceCard';
 import { f1Calendar2026, getCompletedRaces, getUpcomingRaces, getCurrentRaceWeekend } from '@/data/f1-calendar-2026';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Race Schedule',
+    description: 'Complete 2026 Formula 1 World Championship calendar with all 24 Grand Prix races.',
+};
 
 export default function SchedulePage() {
     const currentRace = getCurrentRaceWeekend();
