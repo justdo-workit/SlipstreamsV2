@@ -66,6 +66,7 @@ export default async function StreamingPage({ params }: PageProps) {
                         <div className="space-y-4 order-2 lg:order-1">
                             {/* Polls / Voting Section */}
                             <FanPoll />
+                            <FanPoll pollId="poll/poll2" title="Fan Poll 2" />
 
                             {/* Quick Links (Moved from Right) */}
                             <div className="card p-4 border border-white/10 bg-[hsl(var(--background-elevated))]">

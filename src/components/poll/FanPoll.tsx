@@ -16,8 +16,12 @@ interface PollData {
     totalVotes: number;
     pollVersion?: number;
 }
+interface FanPollProps {
+    pollId?: string;
+    title?: string;
+}
 
-export function FanPoll() {
+export function FanPoll({ pollId = 'poll', title = 'Fan Poll' }: FanPollProps) {
     const [pollData, setPollData] = useState<PollData | null>(null);
     const [votedOption, setVotedOption] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
@@ -25,7 +29,7 @@ export function FanPoll() {
     const prevDataRef = useRef<string>('');
 
     useEffect(() => {
-        const pollRef = ref(db, 'poll');
+        const pollRef = ref(db, pollId);
 
         const unsubscribe = onValue(pollRef, (snapshot) => {
             const data = snapshot.val();
@@ -44,16 +48,16 @@ export function FanPoll() {
                 // Handle Reset Logic
                 // If the poll version from DB is newer/different than what we voted on, clear our vote
                 const currentVersion = data.pollVersion || 0;
-                const localVersion = parseInt(localStorage.getItem('poll_version') || '0');
+                const localVersion = parseInt(localStorage.getItem(`${pollId}_version`) || '0');
 
                 if (currentVersion !== localVersion) {
-                    console.log("Poll reset detected. Clearing local vote.");
+                    console.log(`Poll ${pollId} reset detected. Clearing local vote.`);
                     setVotedOption(null);
-                    localStorage.removeItem('poll_voted_option');
-                    localStorage.setItem('poll_version', currentVersion.toString());
+                    localStorage.removeItem(`${pollId}_voted_option`);
+                    localStorage.setItem(`${pollId}_version`, currentVersion.toString());
                 } else {
                     // Check persistent login if versions match
-                    const storedVote = localStorage.getItem('poll_voted_option');
+                    const storedVote = localStorage.getItem(`${pollId}_voted_option`);
                     if (storedVote) {
                         setVotedOption(storedVote);
                     }
@@ -80,7 +84,7 @@ export function FanPoll() {
         const optionIndex = pollData.options.findIndex(o => o.id === optionId);
         if (optionIndex === -1) return;
 
-        const optionRef = ref(db, `poll/options/${optionIndex}/votes`);
+        const optionRef = ref(db, `${pollId}/options/${optionIndex}/votes`);
 
         try {
             await runTransaction(optionRef, (currentVotes) => {
@@ -88,10 +92,10 @@ export function FanPoll() {
             });
 
             setVotedOption(optionId);
-            localStorage.setItem('poll_voted_option', optionId);
+            localStorage.setItem(`${pollId}_voted_option`, optionId);
             // Ensure version is set so we don't clear vote on reload
             if (pollData.pollVersion) {
-                localStorage.setItem('poll_version', pollData.pollVersion.toString());
+                localStorage.setItem(`${pollId}_version`, pollData.pollVersion.toString());
             }
         } catch (error) {
             console.error("Error casting vote:", error);
@@ -116,7 +120,7 @@ export function FanPoll() {
                 <svg className="w-4 h-4 text-[hsl(var(--brand-red))]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
-                Fan Poll
+                {title}
             </h3>
             <div className="space-y-4">
                 <p className="text-sm font-medium">{pollData.question}</p>
