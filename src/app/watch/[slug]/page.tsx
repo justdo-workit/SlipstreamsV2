@@ -7,6 +7,7 @@ import { HighPerformanceBanner } from '@/components/ads/HighPerformanceBanner';
 import { SidebarAd } from '@/components/ads/SidebarAd';
 import { FanPoll } from '@/components/poll/FanPoll';
 import { f1Calendar2026 } from '@/data/f1-calendar-2026';
+import { GlobalNotification } from '@/components/GlobalNotification';
 import Link from 'next/link';
 
 interface PageProps {
@@ -51,6 +52,7 @@ export default async function StreamingPage({ params }: PageProps) {
 
     return (
         <div className="min-h-screen bg-background">
+            <GlobalNotification />
             <WatchNavbar title={`${race.country} Grand Prix`} backUrl={`/race/${slug}`} />
 
             {/* Main Streaming Section */}

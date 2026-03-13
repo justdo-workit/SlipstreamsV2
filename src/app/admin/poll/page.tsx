@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { db, auth } from '@/lib/firebase';
-import { ref, set, onValue } from 'firebase/database';
+import { ref, set, update, onValue } from 'firebase/database';
 import { signInWithEmailAndPassword, onAuthStateChanged, User, signOut } from 'firebase/auth';
 
 export default function PollAdmin() {
@@ -16,6 +16,11 @@ export default function PollAdmin() {
         { id: 'opt1', label: '', votes: 0 }
     ]);
     const [status, setStatus] = useState('');
+
+    // Global Notification State
+    const [notifMessage, setNotifMessage] = useState('');
+    const [notifActive, setNotifActive] = useState(false);
+    const [notifStatus, setNotifStatus] = useState('');
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -33,6 +38,15 @@ export default function PollAdmin() {
             if (data) {
                 setQuestion(data.question);
                 setOptions(data.options || []);
+            }
+        });
+
+        const notifRef = ref(db, 'poll/notification');
+        onValue(notifRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                setNotifMessage(data.message || '');
+                setNotifActive(data.isActive || false);
             }
         });
     }, [user]);
@@ -77,7 +91,7 @@ export default function PollAdmin() {
     const handleSave = async () => {
         if (!user) return;
         try {
-            await set(ref(db, 'poll'), {
+            await update(ref(db, 'poll'), {
                 question,
                 options,
                 pollVersion: Date.now() // Update version to force clients to refresh/re-evaluate
@@ -96,7 +110,7 @@ export default function PollAdmin() {
 
         const resetOptions = options.map(opt => ({ ...opt, votes: 0 }));
         try {
-            await set(ref(db, 'poll'), {
+            await update(ref(db, 'poll'), {
                 question,
                 options: resetOptions,
                 pollVersion: Date.now() // Force reset on clients
@@ -108,6 +122,22 @@ export default function PollAdmin() {
             setOptions(resetOptions);
         } catch (error) {
             setStatus('Error resetting votes');
+        }
+    };
+
+    const handleSaveNotification = async () => {
+        if (!user) return;
+        try {
+            await set(ref(db, 'poll/notification'), {
+                message: notifMessage,
+                isActive: notifActive,
+                updatedAt: Date.now()
+            });
+            setNotifStatus('Notification updated!');
+            setTimeout(() => setNotifStatus(''), 2000);
+        } catch (error) {
+            setNotifStatus('Error updating notification');
+            console.error(error);
         }
     };
 
@@ -226,6 +256,52 @@ export default function PollAdmin() {
                     {status && (
                         <p className={`text-sm ${status.includes('Error') ? 'text-red-500' : 'text-green-500'}`}>
                             {status}
+                        </p>
+                    )}
+                </div>
+
+                <div className="space-y-4 pt-8 border-t border-white/10 mt-12">
+                    <h2 className="text-2xl font-bold">Global Notification</h2>
+                    <p className="text-sm text-gray-400">
+                        Send a push notification banner that will be visible to all users across the website.
+                    </p>
+
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Notification Message</label>
+                        <textarea
+                            className="w-full p-2 rounded bg-white/5 border border-white/10"
+                            rows={3}
+                            value={notifMessage}
+                            onChange={(e) => setNotifMessage(e.target.value)}
+                            placeholder="Enter the notification text here..."
+                        />
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                                type="checkbox"
+                                className="sr-only peer"
+                                checked={notifActive}
+                                onChange={(e) => setNotifActive(e.target.checked)}
+                            />
+                            <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[hsl(var(--brand-red))]"></div>
+                            <span className="ml-3 text-sm font-medium">Active Banner</span>
+                        </label>
+                    </div>
+
+                    <div className="pt-4 border-t border-white/10">
+                        <button
+                            onClick={handleSaveNotification}
+                            className={`px-4 py-2 ${notifActive ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-600 hover:bg-gray-700'} rounded text-white font-medium`}
+                        >
+                            {notifActive ? 'Publish Notification' : 'Save as Draft / Hide Flag'}
+                        </button>
+                    </div>
+
+                    {notifStatus && (
+                        <p className={`text-sm ${notifStatus.includes('Error') ? 'text-red-500' : 'text-green-500'}`}>
+                            {notifStatus}
                         </p>
                     )}
                 </div>

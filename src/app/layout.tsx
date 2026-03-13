@@ -7,7 +7,6 @@ import { Preloader } from "@/components/ui/Preloader";
 import GoogleAnalytics from "@/components/Analytics";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
