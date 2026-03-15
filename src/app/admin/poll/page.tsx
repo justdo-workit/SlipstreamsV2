@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { db, auth } from '@/lib/firebase';
-import { ref, set, update, onValue } from 'firebase/database';
+import { ref, update, onValue } from 'firebase/database';
 import { signInWithEmailAndPassword, onAuthStateChanged, User, signOut } from 'firebase/auth';
 
 function PollEditor({ pollId, title, user }: { pollId: string; title: string; user: User }) {
@@ -156,10 +156,6 @@ export default function PollAdmin() {
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState('');
 
-    // Global Notification State
-    const [notifMessage, setNotifMessage] = useState('');
-    const [notifActive, setNotifActive] = useState(false);
-    const [notifStatus, setNotifStatus] = useState('');
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -167,19 +163,6 @@ export default function PollAdmin() {
         });
         return () => unsubscribe();
     }, []);
-
-    useEffect(() => {
-        if (!user) return; // Only fetch data if logged in
-
-        const notifRef = ref(db, 'poll/notification');
-        onValue(notifRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                setNotifMessage(data.message || '');
-                setNotifActive(data.isActive || false);
-            }
-        });
-    }, [user]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -194,22 +177,6 @@ export default function PollAdmin() {
 
     const handleLogout = () => {
         signOut(auth);
-    };
-
-    const handleSaveNotification = async () => {
-        if (!user) return;
-        try {
-            await set(ref(db, 'poll/notification'), {
-                message: notifMessage,
-                isActive: notifActive,
-                updatedAt: Date.now()
-            });
-            setNotifStatus('Notification updated!');
-            setTimeout(() => setNotifStatus(''), 2000);
-        } catch (error) {
-            setNotifStatus('Error updating notification');
-            console.error(error);
-        }
     };
 
     if (!user) {
@@ -270,51 +237,6 @@ export default function PollAdmin() {
                     <PollEditor pollId="poll/poll2" title="Secondary Poll" user={user} />
                 </div>
 
-                <div className="space-y-4 pt-8 border-t border-white/10 mt-12">
-                    <h2 className="text-2xl font-bold">Global Notification</h2>
-                    <p className="text-sm text-gray-400">
-                        Send a push notification banner that will be visible to all users across the website.
-                    </p>
-
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Notification Message</label>
-                        <textarea
-                            className="w-full p-2 rounded bg-white/5 border border-white/10"
-                            rows={3}
-                            value={notifMessage}
-                            onChange={(e) => setNotifMessage(e.target.value)}
-                            placeholder="Enter the notification text here..."
-                        />
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                        <label className="relative inline-flex items-center cursor-pointer">
-                            <input
-                                type="checkbox"
-                                className="sr-only peer"
-                                checked={notifActive}
-                                onChange={(e) => setNotifActive(e.target.checked)}
-                            />
-                            <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[hsl(var(--brand-red))]"></div>
-                            <span className="ml-3 text-sm font-medium">Active Banner</span>
-                        </label>
-                    </div>
-
-                    <div className="pt-4 border-t border-white/10">
-                        <button
-                            onClick={handleSaveNotification}
-                            className={`px-4 py-2 ${notifActive ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-600 hover:bg-gray-700'} rounded text-white font-medium`}
-                        >
-                            {notifActive ? 'Publish Notification' : 'Save as Draft / Hide Flag'}
-                        </button>
-                    </div>
-
-                    {notifStatus && (
-                        <p className={`text-sm ${notifStatus.includes('Error') ? 'text-red-500' : 'text-green-500'}`}>
-                            {notifStatus}
-                        </p>
-                    )}
-                </div>
             </div>
         </div>
     );

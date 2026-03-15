@@ -53,7 +53,7 @@ export function GlobalNotification() {
     if (!isVisible || !message) return null;
 
     return (
-        <div className="fixed top-16 left-0 right-0 w-full bg-[hsl(var(--brand-red))] text-white px-4 py-3 shadow-lg flex justify-between items-center z-50 animate-in slide-in-from-top-2 duration-300">
+        <div className="fixed top-0 left-0 right-0 w-full bg-[hsl(var(--brand-red))] text-white px-4 py-3 shadow-lg flex justify-between items-center z-[60] animate-in slide-in-from-top-2 duration-300">
             <div className="flex-1 text-center font-f1 text-sm md:text-base pr-8">
                 {message}
             </div>
