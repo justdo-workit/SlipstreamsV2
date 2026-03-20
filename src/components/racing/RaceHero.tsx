@@ -153,9 +153,9 @@ export function RaceHero({ race }: RaceHeroProps) {
 
                 {/* Countdown Timer */}
                 <div className="mb-12">
-                    <p className="text-foreground-muted uppercase tracking-[0.2em] text-xs font-semibold mb-6">Light Out In</p>
+                    <p className="text-foreground-muted uppercase tracking-[0.2em] text-xs font-semibold mb-6">Lights Out In</p>
                     {countdown && (
-                        <div className="grid grid-cols-4 gap-4 md:gap-8 max-w-3xl mx-auto">
+                        <div className="grid grid-cols-4 gap-4 md:gap-8 max-w-3xl mx-auto"> 
                             {[
                                 { value: countdown.days, label: 'Days' },
                                 { value: countdown.hours, label: 'Hrs' },
