@@ -68,7 +68,7 @@ export default function RootLayout({
       >
         {/* Analytics — tracks page views across all routes */}
         <Suspense fallback={null}>
-          <GoogleAnalytics />
+          {/* <GoogleAnalytics /> Temporarily disabled due to Firebase initialization error */}
           <VercelAnalytics />
         </Suspense>
         <Suspense fallback={null}>
