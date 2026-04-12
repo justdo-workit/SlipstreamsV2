@@ -46,6 +46,7 @@ export interface GrandPrix {
   countryCode: string; // ISO 3166-1 alpha-2
   timezone: string; // IANA timezone
   status: 'completed' | 'live' | 'upcoming';
+  cancelled?: boolean;
 }
 
 export const f1Calendar2026: GrandPrix[] = [
@@ -169,6 +170,7 @@ export const f1Calendar2026: GrandPrix[] = [
     countryCode: 'BH',
     timezone: 'Asia/Bahrain',
     status: 'upcoming',
+    cancelled: true,
   },
   {
     round: 5,
@@ -199,6 +201,7 @@ export const f1Calendar2026: GrandPrix[] = [
     countryCode: 'SA',
     timezone: 'Asia/Riyadh',
     status: 'upcoming',
+    cancelled: true,
   },
   {
     round: 6,

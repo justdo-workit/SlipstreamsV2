@@ -8,6 +8,9 @@ import { StandingsSection } from '@/components/home/StandingsSection';
 import { getUpcomingRaces, f1Calendar2026, getCurrentRaceWeekend, getNextRace } from '@/data/f1-calendar-2026';
 import { getDriverStandings, getConstructorStandings } from '@/lib/openf1';
 
+// Revalidate weekly — races happen Sundays, standings update Mondays
+export const revalidate = 604800;
+
 export default async function HomePage() {
   // Determine the feature race: Current live weekend OR the next upcoming race
   const currentRace = getCurrentRaceWeekend();

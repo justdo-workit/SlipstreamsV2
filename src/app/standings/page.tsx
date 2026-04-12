@@ -4,6 +4,9 @@ import { StandingsTabs } from '@/components/standings/StandingsTabs';
 import { getDriverStandings, getConstructorStandings } from '@/lib/openf1';
 import { Metadata } from 'next';
 
+// Revalidate weekly — races happen Sundays, updated Mondays
+export const revalidate = 604800;
+
 export const metadata: Metadata = {
     title: 'Standings',
     description: 'Track the battle for the championship with 2026 Season Standings.',

@@ -1,117 +1,145 @@
-import { DriverStanding, ConstructorStanding, fallbackDriverStandings, fallbackConstructorStandings } from '@/data/standings-2026';
+import {
+    DriverStanding,
+    ConstructorStanding,
+    fallbackDriverStandings,
+    fallbackConstructorStandings,
+} from '@/data/standings-2026';
 
-// OpenF1 Base URL
-const BASE_URL = 'https://api.openf1.org/v1';
+// Jolpica F1 API (Ergast-compatible, free, no key required)
+const BASE_URL = 'https://api.jolpi.ca/ergast/f1';
 
-// Cache configuration (24 hours in seconds)
-const REVALIDATE_TIME = 86400;
+// Revalidate every 7 days (weekly, Monday refresh after Sunday races)
+// Next.js ISR will automatically serve stale data instantly and refresh in background.
+const REVALIDATE_SECONDS = 604800; // 7 days
 
-interface OpenF1Session {
-    session_key: number;
-    meeting_key: number;
-    session_name: string;
-    year: number;
+// ─── Jolpica Response Types ────────────────────────────────────────────────────
+
+interface JolpicaDriverStanding {
+    position: string;
+    points: string;
+    wins: string;
+    Driver: {
+        driverId: string;
+        code: string;
+        givenName: string;
+        familyName: string;
+        nationality: string;
+    };
+    Constructors: {
+        constructorId: string;
+        name: string;
+    }[];
 }
 
-interface OpenF1DriverStanding {
-    driver_number: number;
-    points: number;
-    session_key: number;
-    meeting_key: number;
+interface JolpicaConstructorStanding {
+    position: string;
+    points: string;
+    wins: string;
+    Constructor: {
+        constructorId: string;
+        name: string;
+        nationality: string;
+    };
 }
 
-// NOTE: Team standings structure logic is inferred since it's a beta endpoint
-// If it's not available, we might need to aggregate driver points manually.
-interface OpenF1TeamStanding {
-    team_name: string; // or team_id
-    points: number;
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+/**
+ * Returns a set of 3-letter driver codes from our fallback list for name
+ * disambiguation — Jolpica gives a `code` field for most drivers.
+ */
+function resolveCode(code: string | undefined, familyName: string): string {
+    if (code && code.length === 3) return code.toUpperCase();
+    return familyName.slice(0, 3).toUpperCase();
 }
 
 /**
- * Fetches the latest completed race session for the current year.
+ * Finds which drivers (from the driver standings) belong to a given constructor,
+ * so we can populate the constructor `drivers` breakdown.
  */
-async function getLatestSessionKey(year: number = 2026): Promise<number | null> {
-    try {
-        // Fetch sessions regarding "Race" type
-        const res = await fetch(`${BASE_URL}/sessions?year=${year}&session_name=Race`, {
-            next: { revalidate: REVALIDATE_TIME },
-        });
-
-        if (!res.ok) return null;
-
-        const sessions: OpenF1Session[] = await res.json();
-        if (!sessions || sessions.length === 0) return null;
-
-        // Sort by session_key (usually increasing) or date if available to get the last one
-        // Assuming session_key increases with time
-        const latestSession = sessions.sort((a, b) => b.session_key - a.session_key)[0];
-
-        return latestSession.session_key;
-    } catch (error) {
-        console.error('Error fetching OpenF1 sessions:', error);
-        return null;
-    }
+function buildConstructorDrivers(
+    constructorName: string,
+    driverStandings: DriverStanding[]
+): { code: string; points: number }[] {
+    return driverStandings
+        .filter((d) => d.team.toLowerCase() === constructorName.toLowerCase())
+        .map((d) => ({ code: d.code, points: d.points }));
 }
 
-/**
- * Fetches driver standings for the latest session.
- */
+// ─── Driver Standings ─────────────────────────────────────────────────────────
+
 export async function getDriverStandings(): Promise<DriverStanding[]> {
-    const sessionKey = await getLatestSessionKey();
-
-    if (!sessionKey) {
-        return fallbackDriverStandings;
-    }
-
     try {
-        // Currently OpenF1 `championship_drivers` might need session_key
-        //Docs: curl "https://api.openf1.org/v1/championship_drivers?session_key=9839"
-        const res = await fetch(`${BASE_URL}/championship_drivers?session_key=${sessionKey}`, {
-            next: { revalidate: REVALIDATE_TIME },
-        });
+        const res = await fetch(
+            `${BASE_URL}/2026/driverStandings.json`,
+            { next: { revalidate: REVALIDATE_SECONDS } }
+        );
 
-        if (!res.ok) throw new Error('Failed to fetch driver standings');
+        if (!res.ok) throw new Error(`Jolpica driver standings returned ${res.status}`);
 
-        // Expected response: array of { driver_number, points, ... }
-        // We need to map driver_number to Name/Team.
-        // OpenF1 has a /drivers endpoint to get details.
+        const json = await res.json();
+        const standingsTable = json?.MRData?.StandingsTable;
+        const standingsLists: JolpicaDriverStanding[] | undefined =
+            standingsTable?.StandingsLists?.[0]?.DriverStandings;
 
-        // For now, if the season hasn't started, we won't get here because sessionKey will be null.
-        // If we DO get here, we need to map the data.
+        if (!standingsLists || standingsLists.length === 0) {
+            console.warn('[Standings] No driver standings data from Jolpica — using fallback');
+            return fallbackDriverStandings;
+        }
 
-        // Since mapping driver numbers to names requires another call or a static map, 
-        // and reliability is key, for now we will return generic structure or 
-        // try to fetch driver info.
+        const mapped: DriverStanding[] = standingsLists.map((entry) => ({
+            rank: parseInt(entry.position, 10),
+            driver: `${entry.Driver.givenName} ${entry.Driver.familyName}`,
+            code: resolveCode(entry.Driver.code, entry.Driver.familyName),
+            team: entry.Constructors[0]?.name ?? 'Unknown',
+            points: parseFloat(entry.points),
+            wins: parseInt(entry.wins, 10),
+            nationality: entry.Driver.nationality,
+        }));
 
-        // Simplification: In a real app, we'd fetch `/drivers` once and map.
-        // Given the constraints and the fact it's 2026 (future), we likely won't get data.
-        // So this logic effectively prepares for it.
-
-        // TODO: Implement full mapping when data is available. 
-        // returning fallback for safety in this iteration as 2026 data is empty.
-        return fallbackDriverStandings;
-
+        return mapped;
     } catch (error) {
-        console.error('Error fetching driver standings:', error);
+        console.error('[Standings] Error fetching driver standings from Jolpica:', error);
         return fallbackDriverStandings;
     }
 }
 
-/**
- * Fetches constructor standings.
- */
+// ─── Constructor Standings ────────────────────────────────────────────────────
+
 export async function getConstructorStandings(): Promise<ConstructorStanding[]> {
-    const sessionKey = await getLatestSessionKey();
-
-    if (!sessionKey) {
-        return fallbackConstructorStandings;
-    }
-
     try {
-        // Similar logic for teams
-        return fallbackConstructorStandings;
+        // Fetch both constructor & driver standings in parallel so we can enrich
+        // the constructor rows with a driver points breakdown.
+        const [constructorRes, driverStandings] = await Promise.all([
+            fetch(`${BASE_URL}/2026/constructorStandings.json`, {
+                next: { revalidate: REVALIDATE_SECONDS },
+            }),
+            getDriverStandings(),
+        ]);
+
+        if (!constructorRes.ok)
+            throw new Error(`Jolpica constructor standings returned ${constructorRes.status}`);
+
+        const json = await constructorRes.json();
+        const standingsLists: JolpicaConstructorStanding[] | undefined =
+            json?.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings;
+
+        if (!standingsLists || standingsLists.length === 0) {
+            console.warn('[Standings] No constructor standings data from Jolpica — using fallback');
+            return fallbackConstructorStandings;
+        }
+
+        const mapped: ConstructorStanding[] = standingsLists.map((entry) => ({
+            rank: parseInt(entry.position, 10),
+            team: entry.Constructor.name,
+            points: parseFloat(entry.points),
+            wins: parseInt(entry.wins, 10),
+            drivers: buildConstructorDrivers(entry.Constructor.name, driverStandings),
+        }));
+
+        return mapped;
     } catch (error) {
-        console.error('Error fetching constructor standings:', error);
+        console.error('[Standings] Error fetching constructor standings from Jolpica:', error);
         return fallbackConstructorStandings;
     }
 }
