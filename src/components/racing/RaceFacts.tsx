@@ -2,7 +2,6 @@
 
 import { GrandPrix } from '@/data/f1-calendar-2026';
 import Image from 'next/image';
-import { SafeAdFrame } from '@/components/ads/SafeAdFrame';
 
 interface RaceFactsProps {
     race: GrandPrix;
@@ -83,16 +82,6 @@ export function RaceFacts({ race }: RaceFactsProps) {
                             </div>
                         ))}
                     </div>
-                </div>
-
-                {/* Ad Placement */}
-                <div className="mt-16 flex justify-center">
-                    <SafeAdFrame
-                        adKey="9942bce170e25aead636127279479c68"
-                        width={300}
-                        height={250}
-                        className="bg-[hsl(var(--background-elevated))] rounded-lg overflow-hidden shadow-sm border border-[hsl(var(--border-subtle))]"
-                    />
                 </div>
             </div>
         </section>

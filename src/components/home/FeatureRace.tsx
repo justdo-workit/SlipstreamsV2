@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { GrandPrix } from '@/data/f1-calendar-2026';
+import { HighPerformanceBanner } from '@/components/ads/HighPerformanceBanner';
 
 interface FeatureRaceProps {
     race: GrandPrix;
@@ -10,7 +11,7 @@ interface FeatureRaceProps {
 
 export function FeatureRace({ race }: FeatureRaceProps) {
     return (
-        <section className="relative h-screen w-full overflow-hidden flex flex-col justify-center mt- pt-30">
+        <section className="relative h-[80vh] w-full overflow-hidden flex flex-col justify-center mt- pt-30">
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 {/* Use a high quality car image or track image if available. For now using placeholder or race track image */}
@@ -53,15 +54,20 @@ export function FeatureRace({ race }: FeatureRaceProps) {
                     </div>
 
                     {/* CTA */}
-                    <Link
-                        href={`/race/${race.country.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="bg-[#FF1E1E] text-white text-xl font-bold px-12 py-6 rounded transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-4 hover:shadow-[0_0_30px_rgba(255,30,30,0.5)] uppercase tracking-wide"
-                    >
-                        Watch Live
-                        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                        </svg>
-                    </Link>
+                    <div className="flex flex-col gap-4">
+                        <div>
+                            <Link
+                                href={`/race/${race.country.toLowerCase().replace(/\s+/g, '-')}`}
+                                className="bg-[#FF1E1E] text-white text-xl font-bold px-12 py-6 rounded transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-4 hover:shadow-[0_0_30px_rgba(255,30,30,0.5)] uppercase tracking-wide"
+                            >
+                                Watch Live
+                                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                                </svg>
+                            </Link>
+                        </div>
+                        <HighPerformanceBanner />
+                    </div>
                 </div>
             </div>
         </section>

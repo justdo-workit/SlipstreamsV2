@@ -3,7 +3,7 @@ import { WatchNavbar } from '@/components/layout/WatchNavbar';
 import { Footer } from '@/components/layout/Footer';
 import { StreamController } from '@/components/video/StreamController';
 import { HighPerformanceAd } from '@/components/ads/HighPerformanceAd';
-import { HighPerformanceBanner } from '@/components/ads/HighPerformanceBanner';
+import { HomeBannerAd } from '@/components/ads/HomeBannerAd';
 import { SidebarAd } from '@/components/ads/SidebarAd';
 import { FanPoll } from '@/components/poll/FanPoll';
 import { f1Calendar2026 } from '@/data/f1-calendar-2026';
@@ -62,9 +62,11 @@ export default async function StreamingPage({ params }: PageProps) {
 
                         {/* Left Column: Polls */}
                         <div className="space-y-4 order-2 lg:order-1">
+                            {/* 160x300 Ad above the first fan poll */}
+                            <SidebarAd />
+
                             {/* Polls / Voting Section */}
                             <FanPoll />
-                            <FanPoll pollId="poll/poll2" title="Fan Poll 2" />
 
                             {/* Quick Links (Moved from Right) */}
                             <div className="card p-4 border border-white/10 bg-[hsl(var(--background-elevated))]">
@@ -99,9 +101,6 @@ export default async function StreamingPage({ params }: PageProps) {
                                     </Link>
                                 </div>
                             </div>
-
-                            {/* Sidebar Ad */}
-                            <SidebarAd />
                         </div>
 
                         {/* Center Column: Player Area */}
@@ -111,7 +110,7 @@ export default async function StreamingPage({ params }: PageProps) {
                             <StreamController />
 
                             {/* Banner Ad Below Video Controller */}
-                            <HighPerformanceBanner />
+                            <HomeBannerAd />
 
 
                         </div>

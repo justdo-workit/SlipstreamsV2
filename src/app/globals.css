@@ -317,4 +317,74 @@
     @apply transition-shadow duration-300;
     @apply hover:shadow-lg hover:shadow-[hsl(var(--brand-red))]/30;
   }
+
+  /* ─── Loading Gate Animations ─────────────────────────── */
+
+  @keyframes speedLine {
+    0%   { transform: translateX(110vw); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateX(-110vw); opacity: 0; }
+  }
+
+  @keyframes gateProgress {
+    0%   { width: 0%; }
+    60%  { width: 70%; }
+    80%  { width: 85%; }
+    95%  { width: 95%; }
+    100% { width: 100%; }
+  }
+
+  @keyframes lightOn {
+    0%, 40% { background: #1a0000; box-shadow: none; }
+    50%, 100% {
+      background: #FF1E1E;
+      box-shadow: 0 0 12px 4px rgba(255,30,30,0.7);
+    }
+  }
+
+  @keyframes gateLogoGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(255,30,30,0.3); }
+    50%       { text-shadow: 0 0 40px rgba(255,30,30,0.9), 0 0 80px rgba(255,30,30,0.4); }
+  }
+
+  @keyframes messageFade {
+    0%   { opacity: 0; transform: translateY(6px); }
+    20%  { opacity: 1; transform: translateY(0); }
+    80%  { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-6px); }
+  }
+
+  @keyframes gateFadeOut {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  @keyframes checkeredSlide {
+    from { background-position: 0 0; }
+    to   { background-position: 40px 0; }
+  }
+
+  .gate-logo-glow {
+    animation: gateLogoGlow 2s ease-in-out infinite;
+  }
+
+  .gate-speed-line {
+    animation: speedLine linear infinite;
+    position: absolute;
+    height: 1px;
+    will-change: transform;
+  }
+
+  .gate-progress-bar {
+    animation: gateProgress 4s cubic-bezier(0.1, 0.05, 0.3, 1) forwards;
+  }
+
+  .gate-message {
+    animation: messageFade 1.2s ease-in-out infinite;
+  }
+
+  .gate-fade-out {
+    animation: gateFadeOut 0.7s ease-out forwards;
+  }
 }

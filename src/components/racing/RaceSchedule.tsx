@@ -123,6 +123,15 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
                             Live Streams Open 60 Mins Before Session Start
                         </span>
                     </div>
+
+                    {/* 300x250 ad exactly below the indication */}
+                    <div className="mt-8 flex justify-center items-center w-full min-h-[250px]">
+                        <SafeAdFrame
+                            adKey="9942bce170e25aead636127279479c68"
+                            width={300}
+                            height={250}
+                        />
+                    </div>
                 </div>
 
                 {/* Grid */}
@@ -183,17 +192,7 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
                                 );
                             })}
 
-                            {/* Sunday Ad */}
-                            {day.name === 'Sunday' && (
-                                <div className="mt-6 flex justify-center">
-                                    <SafeAdFrame
-                                        adKey="3ff3fb1f818fe806eddec9e76ce0c4d6"
-                                        width={468}
-                                        height={60}
-                                        className="bg-[hsl(var(--background-subtle))] rounded-lg overflow-hidden shadow-sm"
-                                    />
-                                </div>
-                            )}
+
                         </div>
                     ))}
                 </div>
