@@ -15,7 +15,7 @@ export function HighPerformanceBanner() {
             pointer-events-auto
             md:relative md:bottom-auto md:left-auto md:right-auto md:z-auto
             md:bg-transparent md:border-0 md:backdrop-blur-none
-            md:mt-8 md:mb-4 md:py-0 md:px-0
+            md:mt-8 md:mb-4 md:py-0 md:px-0 md:justify-start
         ">
             {/* Inner: scale 728×90 down to fit mobile screens, full-size on desktop */}
             <div className="

@@ -11,7 +11,7 @@ interface FeatureRaceProps {
 
 export function FeatureRace({ race }: FeatureRaceProps) {
     return (
-        <section className="relative h-[80vh] w-full overflow-hidden flex flex-col justify-center mt- pt-30">
+        <section className="relative h-[85vh] md:h-screen w-full overflow-hidden flex flex-col justify-center mt- pt-30">
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 {/* Use a high quality car image or track image if available. For now using placeholder or race track image */}
