@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { getVisitedHome, setVisitedHome } from '@/lib/navigationState';
 
 /* ── Tuning ──────────────────────────────────────────────────── */
 const MIN_MS  = 3000;   // always show for at least 3 s (ads need time)
@@ -65,6 +66,18 @@ function StartLights() {
 export function Preloader() {
     const pathname     = usePathname();
     const searchParams = useSearchParams();
+    const router       = useRouter();
+
+    // Guard navigation to race/watch pages if they haven't visited the home page first
+    useEffect(() => {
+        if (pathname === '/') {
+            setVisitedHome(true);
+        } else if (pathname.startsWith('/race/') || pathname.startsWith('/watch/')) {
+            if (!getVisitedHome()) {
+                router.replace('/');
+            }
+        }
+    }, [pathname, router]);
 
     const [phase,   setPhase]   = useState<'show' | 'fade' | 'gone'>('show');
     const [msgIdx,  setMsgIdx]  = useState(0);
