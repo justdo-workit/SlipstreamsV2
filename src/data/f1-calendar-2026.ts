@@ -299,7 +299,7 @@ export const f1Calendar2026: GrandPrix[] = [
     coverImage: 'https://i.pinimg.com/1200x/90/f0/99/90f0993ca07bc9ffe5285bae6b6d33f0.jpg',
     gpImage: 'https://i.pinimg.com/736x/3d/8c/a5/3d8ca5a0e1979a6059e102a208080f75.jpg',
     trackImage: "https://media.formula1.com/image/upload/c_fit,h_704/q_auto/v1740000001/common/f1/2026/track/2026trackcatalunyadetailed.webp",
-    officialName: 'BARCELONA-CATALUNYA GRAND PRIX',
+    officialName: 'SPANISH GRAND PRIX',
     circuit: 'Circuit de Barcelona-Catalunya',
     dateRange: '12 - 14 JUN',
     weekendStart: '2026-06-12T00:00:00+02:00',
