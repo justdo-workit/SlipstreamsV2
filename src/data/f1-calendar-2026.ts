@@ -220,7 +220,7 @@ export const f1Calendar2026: GrandPrix[] = [
       sprintQualifying: { name: 'Sprint Qualifying', date: '2026-05-01', time: '16:30', status: 'completed' },
       sprint: { name: 'Sprint Race', date: '2026-05-02', time: '12:00', status: 'completed' },
       qualifying: { name: 'Qualifying', date: '2026-05-02', time: '16:00', status: 'completed' },
-      race: { name: 'Race', date: '2026-05-03', time: '13:00', status: 'live' }, // Shifted 3 hours earlier by F1
+      race: { name: 'Race', date: '2026-05-03', time: '13:00', status: 'completed' }, // Shifted 3 hours earlier by F1
     },
     facts: {
       circuitLength: '5.412',
@@ -230,7 +230,7 @@ export const f1Calendar2026: GrandPrix[] = [
     },
     countryCode: 'US',
     timezone: 'America/New_York',
-    status: 'live',
+    status: 'completed',
   },
   {
     round: 7,
@@ -305,7 +305,7 @@ export const f1Calendar2026: GrandPrix[] = [
     weekendStart: '2026-06-12T00:00:00+02:00',
     weekendEnd: '2026-06-14T23:59:59+02:00',
     sessions: {
-      fp1: { name: 'Practice 1', date: '2026-06-12', time: '13:30' },
+      fp1: { name: 'Practice 1', date: '2026-06-12', time: '13:30', status: 'live' },
       fp2: { name: 'Practice 2', date: '2026-06-12', time: '17:00' },
       fp3: { name: 'Practice 3', date: '2026-06-13', time: '12:30' },
       qualifying: { name: 'Qualifying', date: '2026-06-13', time: '16:00' },
@@ -320,7 +320,7 @@ export const f1Calendar2026: GrandPrix[] = [
     },
     countryCode: 'ES',
     timezone: 'Europe/Madrid',
-    status: 'upcoming',
+    status: 'live',
   },
   {
     round: 10,
