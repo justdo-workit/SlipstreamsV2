@@ -5,7 +5,6 @@ import { StreamController } from '@/components/video/StreamController';
 import { HighPerformanceAd } from '@/components/ads/HighPerformanceAd';
 import { HomeBannerAd } from '@/components/ads/HomeBannerAd';
 import { SidebarAd } from '@/components/ads/SidebarAd';
-import { FanPoll } from '@/components/poll/FanPoll';
 import { f1Calendar2026 } from '@/data/f1-calendar-2026';
 import Link from 'next/link';
 
@@ -64,9 +63,6 @@ export default async function StreamingPage({ params }: PageProps) {
                         <div className="space-y-4 order-2 lg:order-1">
                             {/* 160x300 Ad above the first fan poll */}
                             <SidebarAd />
-
-                            {/* Polls / Voting Section */}
-                            <FanPoll />
 
                             {/* Quick Links (Moved from Right) */}
                             <div className="card p-4 border border-white/10 bg-[hsl(var(--background-elevated))]">

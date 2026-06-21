@@ -4,7 +4,6 @@ import localFont from "next/font/local";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Preloader } from "@/components/ui/Preloader";
-import GoogleAnalytics from "@/components/Analytics";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
@@ -66,9 +65,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${f1Font.variable} antialiased`}
       >
-        {/* Analytics — tracks page views across all routes */}
         <Suspense fallback={null}>
-          {/* <GoogleAnalytics /> Temporarily disabled due to Firebase initialization error */}
           <VercelAnalytics />
         </Suspense>
         <Suspense fallback={null}>
