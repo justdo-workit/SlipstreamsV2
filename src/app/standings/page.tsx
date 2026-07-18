@@ -1,22 +1,14 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { StandingsTabs } from '@/components/standings/StandingsTabs';
-import { getDriverStandings, getConstructorStandings } from '@/lib/openf1';
 import { Metadata } from 'next';
-
-// Revalidate weekly — races happen Sundays, updated Mondays
-export const revalidate = 604800;
 
 export const metadata: Metadata = {
     title: 'Standings',
     description: 'Track the battle for the championship with 2026 Season Standings.',
 };
 
-export default async function StandingsPage() {
-    // Fetch dynamic standings
-    const driverStandings = await getDriverStandings();
-    const constructorStandings = await getConstructorStandings();
-
+export default function StandingsPage() {
     return (
         <div className="min-h-screen bg-background text-foreground">
             <Navbar />
@@ -44,12 +36,9 @@ export default async function StandingsPage() {
                 </div>
             </section>
 
-            {/* Main Content */}
+            {/* Main Content — StandingsTabs fetches its own data client-side */}
             <main>
-                <StandingsTabs
-                    drivers={driverStandings}
-                    teams={constructorStandings}
-                />
+                <StandingsTabs />
             </main>
 
             {/* Footer */}

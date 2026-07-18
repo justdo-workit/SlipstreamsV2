@@ -4,13 +4,9 @@ import { FeatureRace } from '@/components/home/FeatureRace';
 import { UpcomingRaces } from '@/components/home/UpcomingRaces';
 import { HomeUpcomingBottomAd } from '@/components/ads/HomeUpcomingBottomAd';
 import { StandingsSection } from '@/components/home/StandingsSection';
-import { getUpcomingRaces, f1Calendar2026, getCurrentRaceWeekend, getNextRace } from '@/data/f1-calendar-2026';
-import { getDriverStandings, getConstructorStandings } from '@/lib/openf1';
+import { f1Calendar2026, getCurrentRaceWeekend, getNextRace } from '@/data/f1-calendar-2026';
 
-// Revalidate weekly — races happen Sundays, standings update Mondays
-export const revalidate = 604800;
-
-export default async function HomePage() {
+export default function HomePage() {
   // Determine the feature race: Current live weekend OR the next upcoming race
   const currentRace = getCurrentRaceWeekend();
   const nextRace = getNextRace();
@@ -18,10 +14,6 @@ export default async function HomePage() {
 
   // Get all races for the carousel (it will handle fast-forwarding to current)
   const allRaces = f1Calendar2026;
-
-  // Fetch dynamic standings (OpenF1 or Fallback)
-  const driverStandings = await getDriverStandings();
-  const constructorStandings = await getConstructorStandings();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -37,11 +29,8 @@ export default async function HomePage() {
         {/* Upcoming Races Carousel */}
         <UpcomingRaces races={allRaces} />
 
-        {/* Standings Section */}
-        <StandingsSection
-          drivers={driverStandings}
-          teams={constructorStandings}
-        />
+        {/* Standings Section — fetches its own data client-side */}
+        <StandingsSection />
       </main>
 
       <Footer />

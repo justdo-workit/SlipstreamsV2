@@ -1,15 +1,76 @@
 'use client';
 
-import { useState } from 'react';
-import { DriverStanding, ConstructorStanding } from '@/data/standings-2026';
+import { useState, useEffect } from 'react';
+import {
+    DriverStanding,
+    ConstructorStanding,
+    fallbackDriverStandings,
+    fallbackConstructorStandings,
+} from '@/data/standings-2026';
 
-interface StandingsTabsProps {
-    drivers: DriverStanding[];
-    teams: ConstructorStanding[];
+const API = 'https://api.jolpi.ca/ergast/f1/2026';
+
+function mapDrivers(raw: any[]): DriverStanding[] {
+    return raw.map((entry) => ({
+        rank: parseInt(entry.position, 10),
+        driver: `${entry.Driver.givenName} ${entry.Driver.familyName}`,
+        code: (entry.Driver.code || entry.Driver.familyName.slice(0, 3)).toUpperCase(),
+        team: entry.Constructors[0]?.name ?? 'Unknown',
+        points: parseFloat(entry.points),
+        wins: parseInt(entry.wins, 10),
+        nationality: entry.Driver.nationality,
+    }));
 }
 
-export function StandingsTabs({ drivers, teams }: StandingsTabsProps) {
+function mapConstructors(raw: any[], drivers: DriverStanding[]): ConstructorStanding[] {
+    return raw.map((entry) => ({
+        rank: parseInt(entry.position, 10),
+        team: entry.Constructor.name,
+        points: parseFloat(entry.points),
+        wins: parseInt(entry.wins, 10),
+        drivers: drivers
+            .filter((d) => d.team.toLowerCase() === entry.Constructor.name.toLowerCase())
+            .map((d) => ({ code: d.code, points: d.points })),
+    }));
+}
+
+export function StandingsTabs() {
     const [activeTab, setActiveTab] = useState<'drivers' | 'constructors'>('drivers');
+    const [drivers, setDrivers] = useState<DriverStanding[]>(fallbackDriverStandings);
+    const [teams, setTeams] = useState<ConstructorStanding[]>(fallbackConstructorStandings);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        async function load() {
+            try {
+                const [dRes, cRes] = await Promise.all([
+                    fetch(`${API}/driverStandings.json`),
+                    fetch(`${API}/constructorStandings.json`),
+                ]);
+
+                if (!dRes.ok || !cRes.ok) return;
+
+                const [dJson, cJson] = await Promise.all([dRes.json(), cRes.json()]);
+
+                const dRaw = dJson?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings;
+                const cRaw = cJson?.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings;
+
+                if (!cancelled && dRaw?.length) {
+                    const mappedDrivers = mapDrivers(dRaw);
+                    setDrivers(mappedDrivers);
+                    if (cRaw?.length) {
+                        setTeams(mapConstructors(cRaw, mappedDrivers));
+                    }
+                }
+            } catch {
+                // Fallback data stays in state — no crash
+            }
+        }
+
+        load();
+        return () => { cancelled = true; };
+    }, []);
 
     return (
         <div className="container-custom py-12">
@@ -100,3 +161,4 @@ export function StandingsTabs({ drivers, teams }: StandingsTabsProps) {
         </div>
     );
 }
+

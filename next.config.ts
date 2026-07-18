@@ -1,24 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: 'export',
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'i.pinimg.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'media.formula1.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'ik.imagekit.io',
-      },
-      
-    ],
+    unoptimized: true,
   },
+  trailingSlash: false,
 };
 
 export default nextConfig;
