@@ -385,7 +385,7 @@ export const f1Calendar2026: GrandPrix[] = [
   {
     round: 12,
     country: 'Belgium',
-    location: 'Spa-Francorchamps',
+    location: 'Spa Francorchamps',
     officialName: 'BELGIAN GRAND PRIX',
     coverImage: 'https://i.pinimg.com/1200x/63/3c/49/633c49dabdd4019e05f8ec5c1e591f48.jpg',
     gpImage: 'https://i.pinimg.com/1200x/8b/f1/0d/8bf10d711e03ee5fb716a2c805902a95.jpg',
