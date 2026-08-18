@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import localFont from "next/font/local";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { Preloader } from "@/components/ui/Preloader";
 
@@ -70,6 +71,7 @@ export default function RootLayout({
         </Suspense>
         {children}
       </body>
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || "G-JHT2TCB200"} />
     </html>
   );
 }
