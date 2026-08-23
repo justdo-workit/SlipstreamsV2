@@ -177,9 +177,9 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
 
                                             <div className="mt-4">
                                                 {isLive ? (
-                                                    <Link href={`/watch/${slug}`}>
+                                                    <a href={`/watch/${slug}`}>
                                                         {StatusBadge}
-                                                    </Link>
+                                                    </a>
                                                 ) : (
                                                     StatusBadge
                                                 )}

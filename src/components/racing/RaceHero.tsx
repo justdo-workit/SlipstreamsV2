@@ -180,15 +180,15 @@ export function RaceHero({ race }: RaceHeroProps) {
                 <div className="animate-fade-in delay-300">
                     {isLive ? (
                         <div className="flex flex-col items-center gap-3">
-                            <Link
+                            <a
                                 href={`/watch/${race.country.toLowerCase().replace(/\s+/g, '-')}`}
-                                className="btn-primary text-lg px-12 py-4 inline-flex items-center gap-3 hover-glow-red hover:scale-105 transition-all text-shadow-medium"
+                                className="btn-primary text-lg px-12 py-4 inline-flex items-center gap-3 hover-glow-red hover:scale-105 transition-all text-shadow-medium cursor-pointer"
                             >
                                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                                 </svg>
                                 Watch Live
-                            </Link>
+                            </a>
                             <span className="text-xs font-bold uppercase tracking-widest text-[#FF1E1E] bg-[#FF1E1E]/10 px-3 py-1 rounded-full animate-pulse flex items-center gap-2 border border-[#FF1E1E]/20 mt-2">
                                 <span className="w-2 h-2 rounded-full bg-[#FF1E1E]"></span>
                                 {activeSession} IS LIVE

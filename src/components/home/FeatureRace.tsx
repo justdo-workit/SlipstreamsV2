@@ -1,15 +1,24 @@
 'use client';
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { GrandPrix } from '@/data/f1-calendar-2026';
 import { HighPerformanceBanner } from '@/components/ads/HighPerformanceBanner';
+import { handleWatchLiveClick } from '@/lib/navigationState';
 
 interface FeatureRaceProps {
     race: GrandPrix;
 }
 
 export function FeatureRace({ race }: FeatureRaceProps) {
+    const router = useRouter();
+    const targetUrl = `/race/${race.country.toLowerCase().replace(/\s+/g, '-')}`;
+
+    const onWatchClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        handleWatchLiveClick(targetUrl, router);
+    };
+
     return (
         <section className="relative h-[85vh] md:h-screen w-full overflow-hidden flex flex-col justify-center mt- pt-30">
             {/* Background Image */}
@@ -56,15 +65,16 @@ export function FeatureRace({ race }: FeatureRaceProps) {
                     {/* CTA */}
                     <div className="flex flex-col gap-4">
                         <div>
-                            <Link
-                                href={`/race/${race.country.toLowerCase().replace(/\s+/g, '-')}`}
-                                className="bg-[#FF1E1E] text-white text-xl font-bold px-12 py-6 rounded transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-4 hover:shadow-[0_0_30px_rgba(255,30,30,0.5)] uppercase tracking-wide"
+                            <a
+                                href={targetUrl}
+                                onClick={onWatchClick}
+                                className="bg-[#FF1E1E] text-white text-xl font-bold px-12 py-6 rounded transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-4 hover:shadow-[0_0_30px_rgba(255,30,30,0.5)] uppercase tracking-wide cursor-pointer"
                             >
                                 Watch Live
                                 <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                                 </svg>
-                            </Link>
+                            </a>
                         </div>
                         <HighPerformanceBanner />
                     </div>
