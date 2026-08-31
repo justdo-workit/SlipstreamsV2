@@ -20,7 +20,7 @@ export default function HomePage() {
       <Navbar />
 
       <main>
-        {/* Featured Race Hero (Dynamic) */}
+        {/* Featured Race Hero  */}
         <FeatureRace race={featureRace} />
 
         {/* Ad centered above Upcoming Races */}
