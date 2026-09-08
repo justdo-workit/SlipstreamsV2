@@ -136,11 +136,23 @@ export function RaceHero({ race }: RaceHeroProps) {
 
                 {/* Main Title */}
                 <h1 className="text-4xl md:text-7xl lg:text-7xl font-black uppercase tracking-wide mb-4 text-shadow-strong">
-                    <span className="block ">
-                        {race.country}
-                    </span>
-                    <span className="block text-[hsl(var(--brand-red))]">
-                        Grand Prix
+                    <span className="block">
+                        {race.officialName.split(/(GRAND PRIX)/i).map((part, i) =>
+                            /GRAND PRIX/i.test(part) ? (
+                                <span
+                                    key={i}
+                                    className="relative inline-block text-[hsl(var(--brand-red))]"
+                                    style={{
+                                        animation: 'none',
+                                        textShadow: 'none',
+                                    }}
+                                >
+                                    {part}
+                                </span>
+                            ) : (
+                                <span key={i}>{part}</span>
+                            )
+                        )}
                     </span>
                 </h1>
 
@@ -156,7 +168,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                 <div className="mb-12">
                     <p className="text-foreground-muted uppercase tracking-[0.2em] text-xs font-semibold mb-6">Lights Out In</p>
                     {countdown && (
-                        <div className="grid grid-cols-4 gap-4 md:gap-8 max-w-3xl mx-auto"> 
+                        <div className="grid grid-cols-4 gap-4 md:gap-8 max-w-3xl mx-auto">
                             {[
                                 { value: countdown.days, label: 'Days' },
                                 { value: countdown.hours, label: 'Hrs' },
@@ -180,15 +192,15 @@ export function RaceHero({ race }: RaceHeroProps) {
                 <div className="animate-fade-in delay-300">
                     {isLive ? (
                         <div className="flex flex-col items-center gap-3">
-                            <a
+                            <Link
                                 href={`/watch/${race.country.toLowerCase().replace(/\s+/g, '-')}`}
-                                className="btn-primary text-lg px-12 py-4 inline-flex items-center gap-3 hover-glow-red hover:scale-105 transition-all text-shadow-medium cursor-pointer"
+                                className="btn-primary text-lg px-12 py-4 inline-flex items-center gap-3 hover-glow-red hover:scale-105 transition-all text-shadow-medium"
                             >
                                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                                 </svg>
                                 Watch Live
-                            </a>
+                            </Link>
                             <span className="text-xs font-bold uppercase tracking-widest text-[#FF1E1E] bg-[#FF1E1E]/10 px-3 py-1 rounded-full animate-pulse flex items-center gap-2 border border-[#FF1E1E]/20 mt-2">
                                 <span className="w-2 h-2 rounded-full bg-[#FF1E1E]"></span>
                                 {activeSession} IS LIVE
@@ -234,7 +246,7 @@ export function RaceHero({ race }: RaceHeroProps) {
                         border border-[hsl(var(--border-subtle))] md:border-0
                     ">
                         <SafeAdFrame
-                            adKey="3ff3fb1f818fe806eddec9e76ce0c4d6"
+                            adKey="ad2a861a74c4eeb1f53e763f7939a38c"
                             width={468}
                             height={60}
                         />

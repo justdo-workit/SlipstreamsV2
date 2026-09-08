@@ -135,7 +135,7 @@ export function RaceCard({ race, variant = 'upcoming', className = '' }: RaceCar
             <div className="p-5">
                 {/* Country & Location */}
                 <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">{getFlagEmoji(race.countryCode)}</span>
+                   
                     <div>
                         <h3 className="text-lg font-bold text-foreground">{race.country} Grand Prix</h3>
                         <p className="text-sm text-foreground-muted">{race.circuit}</p>
