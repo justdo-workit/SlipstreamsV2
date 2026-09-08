@@ -6,7 +6,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Race Schedule',
-    description: 'Complete 2026 Formula 1 World Championship calendar with all 24 Grand Prix races.',
+    description: 'Complete 2026 Formula 1 World Championship calendar with all 25 Grand Prix races.',
 };
 
 export default function SchedulePage() {
@@ -35,7 +35,7 @@ export default function SchedulePage() {
                             RACE SCHEDULE
                         </h1>
                         <p className="text-xl text-foreground-muted mb-8">
-                            Complete 2026 Formula 1 World Championship calendar with all 24 Grand Prix races.
+                            Complete 2026 Formula 1 World Championship calendar with all 25 Grand Prix races.
                             Never miss a session with multi-timezone support.
                         </p>
                     </div>
@@ -122,7 +122,7 @@ export default function SchedulePage() {
                                 <div className="text-sm uppercase tracking-wider text-foreground-muted mb-2">
                                     Total Races
                                 </div>
-                                <div className="text-5xl font-black text-gradient-red">24</div>
+                                <div className="text-5xl font-black text-gradient-red">25</div>
                             </div>
                             <div>
                                 <div className="text-sm uppercase tracking-wider text-foreground-muted mb-2">
