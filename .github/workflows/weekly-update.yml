@@ -1,0 +1,47 @@
+name: Targeted Date Auto Commit
+
+on:
+  schedule:
+    # Wakes up every Monday at 00:00 UTC to check the date
+    - cron: '0 0 * * 1' 
+  workflow_dispatch: # This adds a manual button on GitHub so we can test it
+
+jobs:
+  check-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check if today is a scheduled date
+        id: date-check
+        run: |
+          # Get current day, full month name, and year in UTC
+          CURRENT_DAY=$(date +%d)
+          CURRENT_MONTH=$(date +%B)
+          CURRENT_YEAR=$(date +%Y)
+          
+          echo "Checking if today ($CURRENT_DAY $CURRENT_MONTH $CURRENT_YEAR) matches your list..."
+
+          # Read JSON and search for matching day, month, and year
+          MATCH=$(jq --arg d "$CURRENT_DAY" --arg m "$CURRENT_MONTH" --arg y "$CURRENT_YEAR" \
+            '.[] | select(.day==$d and .month==$m and .year==$y)' scheduled-dates.json)
+
+          if [ -n "$MATCH" ]; then
+            echo "Match found! Proceeding with update."
+            echo "should_run=true" >> $GITHUB_OUTPUT
+            
+            # Update the ping file with a timestamp
+            echo "Automated update triggered on specific date: $(date)" > ping.txt
+          else
+            echo "Today is not in the list. Skipping update."
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.date-check.outputs.should_run == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: automated scheduled update [skip ci]'
+          branch: main
+          file_pattern: 'ping.txt'
