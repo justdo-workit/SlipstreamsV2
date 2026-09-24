@@ -1,6 +1,6 @@
 // F1 2026 Race Calendar (Unofficial)
 // Data source: https://www.formula1.com/en/racing/2026.html
-// Last updated: 2026-01-30
+// Last updated: 2026-09-24 (Baku GP times updated per FIA)
 
 export interface RaceSession {
   name: string;
@@ -544,11 +544,11 @@ export const f1Calendar2026: GrandPrix[] = [
     weekendStart: '2026-09-24T00:00:00+04:00',
     weekendEnd: '2026-09-26T23:59:59+04:00',
     sessions: {
-      fp1: { name: 'Practice 1', date: '2026-09-24', time: '12:30' },
-      fp2: { name: 'Practice 2', date: '2026-09-24', time: '16:00' },
-      fp3: { name: 'Practice 3', date: '2026-09-25', time: '11:30' },
-      qualifying: { name: 'Qualifying', date: '2026-09-25', time: '15:00' },
-      race: { name: 'Race', date: '2026-09-26', time: '14:00' },
+      fp1: { name: 'Practice 1', date: '2026-09-24', time: '13:30' },
+      fp2: { name: 'Practice 2', date: '2026-09-24', time: '17:00' },
+      fp3: { name: 'Practice 3', date: '2026-09-25', time: '12:30' },
+      qualifying: { name: 'Qualifying', date: '2026-09-25', time: '16:00' },
+      race: { name: 'Race', date: '2026-09-26', time: '15:00' },
     },
     facts: {
       circuitLength: '6.003',
@@ -589,7 +589,7 @@ export const f1Calendar2026: GrandPrix[] = [
     },
     countryCode: 'MY',
     timezone: 'Asia/Kuala_Lumpur',
-    status: 'upcoming',
+    status: 'live',
   },
   {
     round: 19,
