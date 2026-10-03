@@ -574,10 +574,10 @@ export const f1Calendar2026: GrandPrix[] = [
     weekendStart: '2026-10-02T00:00:00+08:00',
     weekendEnd: '2026-10-04T23:59:59+08:00',
     sessions: {
-      fp1: { name: 'Practice 1', date: '2026-10-02', time: '10:00' },
-      fp2: { name: 'Practice 2', date: '2026-10-02', time: '13:30' },
-      fp3: { name: 'Practice 3', date: '2026-10-03', time: '10:00' },
-      qualifying: { name: 'Qualifying', date: '2026-10-03', time: '13:30' },
+      fp1: { name: 'Practice 1', date: '2026-10-02', time: '10:00', status: 'completed' },
+      fp2: { name: 'Practice 2', date: '2026-10-02', time: '13:30', status: 'completed' },
+      fp3: { name: 'Practice 3', date: '2026-10-03', time: '10:00', status: 'completed' },
+      qualifying: { name: 'Qualifying', date: '2026-10-03', time: '13:30', status: 'completed' },
       race: { name: 'Race', date: '2026-10-04', time: '12:30' },
     },
     facts: {

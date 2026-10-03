@@ -19,10 +19,9 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
         return () => clearInterval(timer);
     }, []);
 
-    const getSessionStatus = (sessionDate: string, sessionTime: string): SessionStatus => {
+    const getSessionStatus = (sessionDate: string, sessionTime: string, sessionName: string): SessionStatus => {
         try {
             // Extract timezone offset from weekendStart (e.g., "+11:00" or "-04:00" or "Z")
-            // format is usually YYYY-MM-DDTHH:mm:ss+HH:mm
             const offsetMatch = race.weekendStart.match(/([+-]\d{2}:\d{2}|Z)$/);
             const offset = offsetMatch ? offsetMatch[0] : 'Z';
 
@@ -30,12 +29,16 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
             const sessionIso = `${sessionDate}T${sessionTime}:00${offset}`;
             const start = new Date(sessionIso);
 
-            // Session duration ~2 hours
-            // "Live" status continues for 1 hour AFTER the session completion
-            // Total "Live" window = 2 hours duration + 1 hour buffer = 3 hours
-            const liveWindowDurationMs = (2 * 60 * 60 * 1000) + (1 * 60 * 60 * 1000);
-            const end = new Date(start.getTime() + liveWindowDurationMs);
-            const openTime = new Date(start.getTime() - 60 * 60 * 1000); // 60 mins before
+            // Stream opens 2 hours before every session
+            const openTime = new Date(start.getTime() - 2 * 60 * 60 * 1000);
+
+            // Race session: stay live for 12 hours after start (covers full race + post-race)
+            // All other sessions: 2 hr duration + 1 hr buffer = 3 hours post-start
+            const isRaceSession = sessionName.toLowerCase() === 'race';
+            const postStartWindowMs = isRaceSession
+                ? 12 * 60 * 60 * 1000  // 12 hours for Race
+                : 3 * 60 * 60 * 1000;  // 3 hours for FP / Qualifying / Sprint
+            const end = new Date(start.getTime() + postStartWindowMs);
 
             if (now < openTime) return 'upcoming';
             if (now >= openTime && now <= end) return 'live';
@@ -120,7 +123,7 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span className="text-sm font-bold uppercase tracking-wider">
-                            Live Streams Open 60 Mins Before Session Start
+                            Live Streams Open 2 Hours Before Session Start
                         </span>
                     </div>
 
@@ -143,7 +146,7 @@ export function RaceSchedule({ race }: RaceScheduleProps) {
                             </h3>
 
                             {day.items.map((session: any, index) => {
-                                const status = getSessionStatus(session.date, session.time);
+                                const status = getSessionStatus(session.date, session.time, session.name);
                                 const isLive = status === 'live';
 
                                 const StatusBadge = (
