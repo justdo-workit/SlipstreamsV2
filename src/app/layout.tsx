@@ -64,6 +64,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+      {/* Step 1: Include Adcash library */}
+        <Script
+          id="aclib"
+          src="//://accdn.com"
+          strategy="afterInteractive"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${f1Font.variable} antialiased`}
       >
@@ -72,12 +80,7 @@ export default function RootLayout({
         </Suspense>
         {children}
 
-        {/* Step 1: Include Adcash library */}
-        <Script
-          id="aclib"
-          src="//://accdn.com"
-          strategy="afterInteractive"
-        />
+        
 
         {/* Step 2: Put the tag script on the page */}
         <Script id="adcash-autotag" strategy="afterInteractive">
