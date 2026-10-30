@@ -85,8 +85,8 @@ export default function RootLayout({
         {/* Step 2: Put the tag script on the page */}
         <Script id="adcash-autotag" strategy="afterInteractive">
           {`
-            aclib.runAutoTag({
-                zoneId: 'w7nns8lfqv',
+            aclib.runPop({
+             zoneId: '12382050',
             });
           `}
         </Script>
