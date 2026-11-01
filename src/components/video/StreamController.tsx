@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 
 const STREAMS = {
     DEFAULT: 'https://westreamf1.com/westreamf1.php',
-    BACKUP_1: 'https://hakunamatata5.org/sky-main-event/clean.html',
+    BACKUP_1: 'https://trend48.st/event/m-f1-mexico-city-gp?stream=2',
     BACKUP_2: 'https://streamcrichd.com/update/skyf1.php',
     BACKUP_3: 'https://dlhd.link/stream/stream-60.php',
 };
