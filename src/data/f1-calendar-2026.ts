@@ -1,7 +1,7 @@
 // F1 2026 Race Calendar (Unofficial)
 // Data source: https://www.formula1.com/en/racing/2026.html
 // Last updated: 2026-09-24 (Baku GP times updated per FIA)
-// Last update on 28-10-26 , for Mexican GP 
+// Last update on 04-11-26 , for Brazilian  GP 
 
 export interface RaceSession {
   name: string;
