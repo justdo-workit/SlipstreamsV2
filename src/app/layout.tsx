@@ -65,11 +65,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      {/* Step 1: Include Adcash library */}
+        {/* Step 1: Include Adcash library */}
         <Script
           id="aclib"
-          src="//://accdn.com"
-          strategy="afterInteractive"
+          type="text/javascript"
+          src="//accdn.com/script/aclib.js"
+          strategy="beforeInteractive"
         />
       </head>
       <body
