@@ -36,7 +36,7 @@ export default function SchedulePage() {
                         </h1>
                         <p className="text-xl text-foreground-muted mb-8">
                             Complete 2026 Formula 1 World Championship calendar with all 25 Grand Prix races.
-                            Never miss a session with multi-timezone support.
+                    
                         </p>
                     </div>
                 </div>
